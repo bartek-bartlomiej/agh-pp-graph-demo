@@ -1,5 +1,7 @@
 <template>
-  <div id="container" ref="container" />
+  <div class="card cytoscape-container">
+    <div class="cytoscape-display" ref="container" />
+  </div>
 </template>
 
 <script>
@@ -41,12 +43,13 @@ export default {
 </script>
 
 <style>
-  #container {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
+  .cytoscape-container {
+    display: flex;
+    max-height: 90vh;
+  }
+  .card > .cytoscape-display {
+    min-width: 50vw;
+    height: 90vh;
+    width: 100vw;
   }
 </style>
