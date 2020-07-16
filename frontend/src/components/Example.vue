@@ -1,35 +1,52 @@
 <template>
-  <div id="example">
-    <cytoscape
-      ref="cyRef"
-      :config="config">
-      <cy-element
-        v-for="def in elements"
-        :key="`${def.data.id}`"
-        :definition="def"/>
-    </cytoscape>
-  </div>
+  <div id="container" ref="container" />
 </template>
 
 <script>
-import config from '../assets/example-config.json'
-import elements from '../assets/example-elements.json'
+import cytoscape from 'cytoscape'
+import style from '../assets/style.json'
+import elements from '../assets/elements.json'
 
 export default {
   name: 'Example',
-  data () {
-    return {
-      config: config,
-      elements: elements
+  props: {
+    layoutName: {
+      type: String,
+      required: true,
+      default: 'grid'
     }
+  },
+  data () {
+    return {}
+  },
+  watch: {
+    layoutName (value) {
+      if (this.$_cy === null) {
+        return
+      }
+      this.$_cy.layout({ name: value }).run()
+    }
+  },
+  mounted () {
+    const cy = cytoscape({
+      container: this.$refs.container,
+      elements,
+      style
+    })
+    cy.center()
+    this.$_cy = cy
   }
 }
 
 </script>
 
 <style>
-  #example {
+  #container {
     width: 100%;
-    height: 800px;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
   }
 </style>
