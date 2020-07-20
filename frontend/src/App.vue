@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Example from './components/Example'
+import Example from './components/GraphPanel'
 import GeneratorPanel from './components/ElementsPanel'
 import LayoutPanel from './components/LayoutPanel'
 

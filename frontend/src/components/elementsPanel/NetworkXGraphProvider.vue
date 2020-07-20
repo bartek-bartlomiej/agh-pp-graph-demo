@@ -22,13 +22,45 @@
 
 <script>
 import NetworkXGeneratorsList from './NetworkXGeneratorsList'
+import apiOperationMixin from '../../mixin/apiOperationMixin'
+
+const mixinData = {
+  operationName: 'generate',
+  shouldRetry: false,
+  consoleErrorMessage: 'Could not get generated graph',
+  toastErrorMessage: 'Could not generate graph'
+}
 
 export default {
   name: 'networkx-graph-provider',
-  components: { GeneratorsList: NetworkXGeneratorsList },
+  mixins: [
+    apiOperationMixin
+  ],
+  components: {
+    GeneratorsList: NetworkXGeneratorsList
+  },
   data () {
     return {
-      generator: undefined
+      generator: undefined,
+      ...mixinData
+    }
+  },
+  computed: {
+    operationData () {
+      return {
+        name: this.generator.name
+        // TODO: params
+      }
+    }
+  },
+  watch: {
+    generator () {
+      this.performOperation()
+    }
+  },
+  methods: {
+    handleOperationSucceeded (graph) {
+      this.$emit('input', graph.elements)
     }
   }
 }

@@ -40,7 +40,7 @@ export default {
       }
       this.$_cy.remove('*')
       this.$_cy.add(value)
-      this.$_cy.layout(this.value).run()
+      this.$_cy.layout(this.layout).run()
     },
     layout (value) {
       if (this.$_cy === null) {
