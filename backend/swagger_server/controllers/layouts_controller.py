@@ -53,7 +53,7 @@ def arrange(body):
         return 'Graph data is missing'
 
     G = nx.readwrite.json_graph.cytoscape_graph(body.graph)
-    P = layouts_dict.get(body.layout)(G)
+    P = layouts_dict.get(body.layout.name)(G)
     return P
 
 
