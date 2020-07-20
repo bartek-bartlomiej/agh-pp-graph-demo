@@ -1,42 +1,63 @@
 <template>
-  <div>
-    <nav class="navbar is-info" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <div class="navbar-item">
+  <div class="dashboard is-full-height">
+    <!-- left panel -->
+    <div class="dashboard-panel is-medium has-thick-padding has-background-grey-lighter is-hidden-mobile is-scrollable">
+      <header class="dashboard-panel-header">
+        <div class="has-text-centered">
           <span class="tag is-large is-white">
             PP Graph App
           </span>
         </div>
+      </header>
 
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarApp">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+      <div class="dashboard-panel-content">
+        <aside class="menu">
+          <p class="menu-label">
+            Graph - from NetworkX
+          </p>
+          <ul class="menu-list">
+            <li><a>TODO</a></li>
+            <li><a>TODO</a></li>
+            <li><a>TODO</a></li>
+          </ul>
+          <p class="menu-label">
+            Graph - from file
+          </p>
+          <ul class="menu-list">
+            <li>TODO</li>
+          </ul>
+          <p class="menu-label">
+            Layout - from NetworkX
+          </p>
+          <ul class="menu-list">
+            <li><a>TODO</a></li>
+            <li><a>TODO</a></li>
+            <li><a>TODO</a></li>
+          </ul>
+          <p class="menu-label">
+            Layout - from Cytoscape
+          </p>
+          <ul class="menu-list">
+            <li v-for="(layout, i) in layouts" :key="i">
+              <a
+                :class="{ 'is-active': (selected === layout) }"
+                @click="selected = layout">
+                {{ layout }}
+              </a>
+            </li>
+          </ul>
+        </aside>
       </div>
+    </div>
 
-      <div id="navbarApp" class="navbar-menu">
-        <div class="navbar-start">
-          <div class="navbar-item">
-            <div class="select">
-              <select v-model="selected">
-                <option
-                  v-for="(layout, i) in layouts"
-                  :key="i"
-                  :value="layout">
-                  {{ layout }}
-                </option>
-              </select>
-            </div>
-          </div>
+    <!-- main section -->
+    <div class="dashboard-main">
+      <section class="hero is-fullheight-with-navbar">
+        <div class="hero-body">
+          <example :layout-name="selected" />
         </div>
-      </div>
-    </nav>
-    <section class="hero is-fullheight-with-navbar">
-      <div class="hero-body">
-        <example :layout-name="selected" />
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
 </template>
 

@@ -48,8 +48,7 @@ export default {
     max-height: 90vh;
   }
   .card > .cytoscape-display {
-    min-width: 50vw;
     height: 90vh;
-    width: 100vw;
+    width: calc(100vw - 24rem);
   }
 </style>
