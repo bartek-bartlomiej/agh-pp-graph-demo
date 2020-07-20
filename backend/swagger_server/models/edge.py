@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.edge_data import EdgeData  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,30 +15,20 @@ class Edge(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, source: str=None, target: str=None, key: str=None):  # noqa: E501
+    def __init__(self, data: EdgeData=None):  # noqa: E501
         """Edge - a model defined in Swagger
 
-        :param source: The source of this Edge.  # noqa: E501
-        :type source: str
-        :param target: The target of this Edge.  # noqa: E501
-        :type target: str
-        :param key: The key of this Edge.  # noqa: E501
-        :type key: str
+        :param data: The data of this Edge.  # noqa: E501
+        :type data: EdgeData
         """
         self.swagger_types = {
-            'source': str,
-            'target': str,
-            'key': str
+            'data': EdgeData
         }
 
         self.attribute_map = {
-            'source': 'source',
-            'target': 'target',
-            'key': 'key'
+            'data': 'data'
         }
-        self._source = source
-        self._target = target
-        self._key = key
+        self._data = data
 
     @classmethod
     def from_dict(cls, dikt) -> 'Edge':
@@ -51,68 +42,24 @@ class Edge(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def source(self) -> str:
-        """Gets the source of this Edge.
+    def data(self) -> EdgeData:
+        """Gets the data of this Edge.
 
 
-        :return: The source of this Edge.
-        :rtype: str
+        :return: The data of this Edge.
+        :rtype: EdgeData
         """
-        return self._source
+        return self._data
 
-    @source.setter
-    def source(self, source: str):
-        """Sets the source of this Edge.
+    @data.setter
+    def data(self, data: EdgeData):
+        """Sets the data of this Edge.
 
 
-        :param source: The source of this Edge.
-        :type source: str
+        :param data: The data of this Edge.
+        :type data: EdgeData
         """
-        if source is None:
-            raise ValueError("Invalid value for `source`, must not be `None`")  # noqa: E501
+        if data is None:
+            raise ValueError("Invalid value for `data`, must not be `None`")  # noqa: E501
 
-        self._source = source
-
-    @property
-    def target(self) -> str:
-        """Gets the target of this Edge.
-
-
-        :return: The target of this Edge.
-        :rtype: str
-        """
-        return self._target
-
-    @target.setter
-    def target(self, target: str):
-        """Sets the target of this Edge.
-
-
-        :param target: The target of this Edge.
-        :type target: str
-        """
-        if target is None:
-            raise ValueError("Invalid value for `target`, must not be `None`")  # noqa: E501
-
-        self._target = target
-
-    @property
-    def key(self) -> str:
-        """Gets the key of this Edge.
-
-
-        :return: The key of this Edge.
-        :rtype: str
-        """
-        return self._key
-
-    @key.setter
-    def key(self, key: str):
-        """Sets the key of this Edge.
-
-
-        :param key: The key of this Edge.
-        :type key: str
-        """
-
-        self._key = key
+        self._data = data

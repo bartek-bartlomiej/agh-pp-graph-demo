@@ -10,13 +10,13 @@ tags:
   description: Endpoints for NetworkX generators
 - name: layouts
   description: Endpoints for NetworkX layout generators
-  
+
 paths:
   /graph/generators:
     get:
       tags:
       - generators
-      summary: Returns supported NetowrkX generators
+      summary: Returns supported NetworkX generators
       operationId: get_generators
       responses:
         200:
@@ -27,7 +27,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Generator'
-                  
+
 
   /graph/generate:
     post:
@@ -52,12 +52,12 @@ paths:
         405:
           description: Invalid input
           content: {}
-      
+
   /graph/layouts:
     get:
       tags:
       - layouts
-      summary: Returns supported NetowrkX layout algorithms
+      summary: Returns supported NetworkX layout algorithms
       operationId: get_layouts
       responses:
         200:
@@ -68,7 +68,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Layout'
-  
+
   /graph/arrange:
     post:
       tags:
@@ -100,7 +100,7 @@ paths:
     post:
       tags:
       - parse
-      summary: parse graph from attached files
+      summary: Parse graph from attached files
       operationId: uploadFile
       requestBody:
         content:
@@ -132,7 +132,7 @@ components:
       properties:
         name:
           type: string
-          
+
     Graph:
       required:
       - elements
@@ -157,39 +157,49 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Edge'
-                
+
     Node:
       required:
-      - id
+      - data
       type: object
       properties:
-        id:
-          type: string
-        value:
+        data:
           type: object
-          properties: {}
-        name:
-          type: string
-          
+          required:
+            - id
+          properties:
+            id:
+              type: string
+            value:
+              type: object
+              properties: {}
+            name:
+              type: string
+
     Edge:
       required:
-      - source
-      - target
+      - data
       type: object
       properties:
-        source:
-          type: string
-        target:
-          type: string
-        key:
-          type: string
-          
+        data:
+          type: object
+          required:
+          - source
+          - target
+          properties:
+            source:
+              type: string
+            target:
+              type: string
+            key:
+              type: string
+
     Layout:
       type: object
       properties:
         name:
           type: string
-          
+
     ArrangmentInfo:
       type: object
       properties:
@@ -197,7 +207,7 @@ components:
           $ref: '#/components/schemas/Graph'
         layout:
           $ref: '#/components/schemas/Layout'
-          
+
     NodePosition:
       type: object
       properties:
