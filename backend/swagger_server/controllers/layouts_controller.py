@@ -58,7 +58,7 @@ def arrange(body):
 
 
 def get_layouts():
-    """Returns supported NetowrkX layout algorithms
+    """Returns supported NetworkX layout algorithms
     :rtype: List[Layout]
     """
     layouts = []

@@ -78,7 +78,7 @@ def generate(body):
     return graph_data
 
 def get_generators():
-    """Returns supported NetowrkX generators
+    """Returns supported NetworkX generators
     :rtype: List[Generator]
     """
     generators = []

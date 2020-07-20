@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.node_data import NodeData  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,30 +15,20 @@ class Node(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, value: object=None, name: str=None):  # noqa: E501
+    def __init__(self, data: NodeData=None):  # noqa: E501
         """Node - a model defined in Swagger
 
-        :param id: The id of this Node.  # noqa: E501
-        :type id: str
-        :param value: The value of this Node.  # noqa: E501
-        :type value: object
-        :param name: The name of this Node.  # noqa: E501
-        :type name: str
+        :param data: The data of this Node.  # noqa: E501
+        :type data: NodeData
         """
         self.swagger_types = {
-            'id': str,
-            'value': object,
-            'name': str
+            'data': NodeData
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'value': 'value',
-            'name': 'name'
+            'data': 'data'
         }
-        self._id = id
-        self._value = value
-        self._name = name
+        self._data = data
 
     @classmethod
     def from_dict(cls, dikt) -> 'Node':
@@ -51,66 +42,24 @@ class Node(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id(self) -> str:
-        """Gets the id of this Node.
+    def data(self) -> NodeData:
+        """Gets the data of this Node.
 
 
-        :return: The id of this Node.
-        :rtype: str
+        :return: The data of this Node.
+        :rtype: NodeData
         """
-        return self._id
+        return self._data
 
-    @id.setter
-    def id(self, id: str):
-        """Sets the id of this Node.
+    @data.setter
+    def data(self, data: NodeData):
+        """Sets the data of this Node.
 
 
-        :param id: The id of this Node.
-        :type id: str
+        :param data: The data of this Node.
+        :type data: NodeData
         """
-        if id is None:
-            raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
+        if data is None:
+            raise ValueError("Invalid value for `data`, must not be `None`")  # noqa: E501
 
-        self._id = id
-
-    @property
-    def value(self) -> object:
-        """Gets the value of this Node.
-
-
-        :return: The value of this Node.
-        :rtype: object
-        """
-        return self._value
-
-    @value.setter
-    def value(self, value: object):
-        """Sets the value of this Node.
-
-
-        :param value: The value of this Node.
-        :type value: object
-        """
-
-        self._value = value
-
-    @property
-    def name(self) -> str:
-        """Gets the name of this Node.
-
-
-        :return: The name of this Node.
-        :rtype: str
-        """
-        return self._name
-
-    @name.setter
-    def name(self, name: str):
-        """Sets the name of this Node.
-
-
-        :param name: The name of this Node.
-        :type name: str
-        """
-
-        self._name = name
+        self._data = data
