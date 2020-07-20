@@ -14,7 +14,7 @@ paths:
     get:
       tags:
       - generators
-      summary: Returns supported NetowrkX generators
+      summary: Returns supported NetworkX generators
       operationId: get_generators
       responses:
         "200":
@@ -55,7 +55,7 @@ paths:
     get:
       tags:
       - layouts
-      summary: Returns supported NetowrkX layout algorithms
+      summary: Returns supported NetworkX layout algorithms
       operationId: get_layouts
       responses:
         "200":
@@ -99,7 +99,7 @@ paths:
     post:
       tags:
       - parse
-      summary: parse graph from attached files
+      summary: Parse graph from attached files
       operationId: upload_file
       requestBody:
         content:
@@ -146,53 +146,48 @@ components:
         - data
         elements:
           nodes:
-          - name: name
-            id: id
-            value: {}
-          - name: name
-            id: id
-            value: {}
+          - data:
+              name: name
+              id: id
+              value: {}
+          - data:
+              name: name
+              id: id
+              value: {}
           edges:
-          - source: source
-            key: key
-            target: target
-          - source: source
-            key: key
-            target: target
+          - data:
+              source: source
+              key: key
+              target: target
+          - data:
+              source: source
+              key: key
+              target: target
         multigraph: true
     Node:
       required:
-      - id
+      - data
       type: object
       properties:
-        id:
-          type: string
-        value:
-          type: object
-          properties: {}
-          example: {}
-        name:
-          type: string
+        data:
+          $ref: '#/components/schemas/Node_data'
       example:
-        name: name
-        id: id
-        value: {}
+        data:
+          name: name
+          id: id
+          value: {}
     Edge:
       required:
-      - source
-      - target
+      - data
       type: object
       properties:
-        source:
-          type: string
-        target:
-          type: string
-        key:
-          type: string
+        data:
+          $ref: '#/components/schemas/Edge_data'
       example:
-        source: source
-        key: key
-        target: target
+        data:
+          source: source
+          key: key
+          target: target
     Layout:
       type: object
       properties:
@@ -244,17 +239,53 @@ components:
             $ref: '#/components/schemas/Edge'
       example:
         nodes:
-        - name: name
-          id: id
-          value: {}
-        - name: name
-          id: id
-          value: {}
+        - data:
+            name: name
+            id: id
+            value: {}
+        - data:
+            name: name
+            id: id
+            value: {}
         edges:
-        - source: source
-          key: key
-          target: target
-        - source: source
-          key: key
-          target: target
-
+        - data:
+            source: source
+            key: key
+            target: target
+        - data:
+            source: source
+            key: key
+            target: target
+    Node_data:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: object
+          properties: {}
+          example: {}
+        name:
+          type: string
+      example:
+        name: name
+        id: id
+        value: {}
+    Edge_data:
+      required:
+      - source
+      - target
+      type: object
+      properties:
+        source:
+          type: string
+        target:
+          type: string
+        key:
+          type: string
+      example:
+        source: source
+        key: key
+        target: target
