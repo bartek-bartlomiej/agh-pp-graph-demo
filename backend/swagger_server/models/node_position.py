@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.dual_type import DualType  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,18 +15,18 @@ class NodePosition(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, x: float=None, y: float=None):  # noqa: E501
+    def __init__(self, id: DualType=None, x: float=None, y: float=None):  # noqa: E501
         """NodePosition - a model defined in Swagger
 
         :param id: The id of this NodePosition.  # noqa: E501
-        :type id: str
+        :type id: DualType
         :param x: The x of this NodePosition.  # noqa: E501
         :type x: float
         :param y: The y of this NodePosition.  # noqa: E501
         :type y: float
         """
         self.swagger_types = {
-            'id': str,
+            'id': DualType,
             'x': float,
             'y': float
         }
@@ -51,22 +52,22 @@ class NodePosition(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id(self) -> str:
+    def id(self) -> DualType:
         """Gets the id of this NodePosition.
 
 
         :return: The id of this NodePosition.
-        :rtype: str
+        :rtype: DualType
         """
         return self._id
 
     @id.setter
-    def id(self, id: str):
+    def id(self, id: DualType):
         """Sets the id of this NodePosition.
 
 
         :param id: The id of this NodePosition.
-        :type id: str
+        :type id: DualType
         """
 
         self._id = id
