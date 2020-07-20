@@ -70,12 +70,14 @@ def generate(body):
         return 'Request has to be in JSON format'
 
     body = Generator.from_dict(connexion.request.get_json())
-    G = generators_dict.get(body.name, lambda: 'Invalid generator name')()
+    if not body.name in generators_dict.keys():
+        return 'Invalid generator name'
+
+    G = generators_dict.get(body.name)()
     graph_data = nx.readwrite.json_graph.cytoscape_data(G)
     return graph_data
 
-
-def get_generators():  # noqa: E501
+def get_generators():
     """Returns supported NetowrkX generators
     :rtype: List[Generator]
     """
