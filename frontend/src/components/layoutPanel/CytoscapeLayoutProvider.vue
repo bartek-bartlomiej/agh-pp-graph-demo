@@ -37,8 +37,9 @@ export default {
   computed: {
     layout () {
       return {
-        name: this.algorithm.name
+        name: this.algorithm.name,
         // TODO: params
+        displayName: `${this.algorithm.name.toString()} from Cytoscape.js`
       }
     }
   },

@@ -9,7 +9,8 @@ export default {
   name: 'FileGraphProvider',
   created () {
     this.$emit('input', {
-      elements
+      elements,
+      displayName: 'Dummy graph'
     })
   }
 }

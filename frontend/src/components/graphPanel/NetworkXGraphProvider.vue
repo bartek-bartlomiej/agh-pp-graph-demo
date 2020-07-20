@@ -60,7 +60,10 @@ export default {
   },
   methods: {
     handleOperationSucceeded (graph) {
-      this.$emit('input', graph)
+      this.$emit('input', {
+        ...graph,
+        displayName: `${this.generator.name.toString()} from NetworkX`
+      })
     }
   }
 }

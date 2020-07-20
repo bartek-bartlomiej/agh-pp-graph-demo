@@ -9,7 +9,11 @@
         :graph="graph"
         v-model="layout"
       />
+    </template>
+    <template v-if="graph !== undefined && layout !== undefined">
       <div class="dashboard-main">
+        Graph: {{ graph.displayName }}
+        Layout: {{ layout.displayName }}
         <section class="hero is-fullheight-with-navbar">
           <div class="hero-body">
             <viewer
