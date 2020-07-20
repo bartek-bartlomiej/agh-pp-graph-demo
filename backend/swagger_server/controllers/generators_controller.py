@@ -81,4 +81,7 @@ def get_generators():
     """Returns supported NetowrkX generators
     :rtype: List[Generator]
     """
-    return list(generators_dict.keys())
+    generators = []
+    for k, v in generators_dict.items():
+        generators.append({"name": k})
+    return generators
