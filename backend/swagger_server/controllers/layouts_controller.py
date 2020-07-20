@@ -61,4 +61,7 @@ def get_layouts():
     """Returns supported NetowrkX layout algorithms
     :rtype: List[Layout]
     """
-    return list(layouts_dict.keys())
+    layouts = []
+    for k, v in layouts_dict.items():
+        layouts.append({"name": k})
+    return layouts
