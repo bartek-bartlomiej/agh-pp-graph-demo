@@ -37,15 +37,20 @@ export default {
   computed: {
     layout () {
       return {
-        name: this.algorithm.name,
+        name: this.algorithm.name
         // TODO: params
+      }
+    },
+    layoutInfo () {
+      return {
+        layout: this.layout,
         displayName: `${this.algorithm.name.toString()} from Cytoscape.js`
       }
     }
   },
   watch: {
     algorithm () {
-      this.$emit('input', this.layout)
+      this.$emit('input', this.layoutInfo)
     }
   }
 }

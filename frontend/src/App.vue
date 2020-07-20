@@ -1,28 +1,30 @@
 <template>
   <div class="dashboard is-full-height">
     <graph-panel
-      v-model="graph"
+      v-model="graphInfo"
     />
-    <template
-      v-if="graph !== undefined">
-      <layout-panel
-        :graph="graph"
-        v-model="layout"
-      />
-    </template>
-    <template v-if="graph !== undefined && layout !== undefined">
-      <div class="dashboard-main">
-        Graph: {{ graph.displayName }}
-        Layout: {{ layout.displayName }}
-        <section class="hero is-fullheight-with-navbar">
-          <div class="hero-body">
-            <viewer
-              :elements="graph.elements"
-              :layout="layout" />
+    <layout-panel
+      :graph="graph"
+      v-model="layoutInfo"
+    />
+    <div class="dashboard-main">
+      <section class="hero is-fullheight-with-navbar">
+        <div class="hero-body">
+          <div class="container content">
+            <p>
+              <viewer
+                :graph="graph"
+                :layout="layout" />
+            </p>
+            <p>
+              Graph: {{ graphDisplayName }}
+              <br/>
+              Layout: {{ layoutDisplayName }}
+            </p>
           </div>
-        </section>
-      </div>
-    </template>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -40,8 +42,22 @@ export default {
   },
   data () {
     return {
-      graph: undefined,
-      layout: undefined
+      graphInfo: undefined,
+      layoutInfo: undefined
+    }
+  },
+  computed: {
+    graph () {
+      return this.graphInfo !== undefined ? this.graphInfo.graph : undefined
+    },
+    graphDisplayName () {
+      return this.graphInfo !== undefined ? this.graphInfo.displayName : '-'
+    },
+    layout () {
+      return this.layoutInfo !== undefined ? this.layoutInfo.layout : undefined
+    },
+    layoutDisplayName () {
+      return this.layoutInfo !== undefined ? this.layoutInfo.displayName : '-'
     }
   }
 }

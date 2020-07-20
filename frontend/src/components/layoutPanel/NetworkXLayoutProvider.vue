@@ -53,8 +53,13 @@ export default {
     layout () {
       return {
         name: 'preset',
-        positions: undefined,
-        // TODO: params,
+        positions: undefined
+        // TODO: params
+      }
+    },
+    layoutInfo () {
+      return {
+        layout: this.layout,
         displayName: `${this.algorithm.name.toString()} from NetworkX`
       }
     },

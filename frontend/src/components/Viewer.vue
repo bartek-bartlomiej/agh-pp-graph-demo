@@ -8,6 +8,9 @@
 import cytoscape from 'cytoscape'
 import style from '../assets/style.json'
 
+const defaultGraph = {
+  elements: []
+}
 const defaultLayout = {
   name: 'grid'
 }
@@ -15,11 +18,11 @@ const defaultLayout = {
 export default {
   name: 'Example',
   props: {
-    elements: {
-      type: [Object, Array],
+    graph: {
+      type: Object,
       required: true,
       default () {
-        return []
+        return defaultGraph
       }
     },
     layout: {
@@ -34,12 +37,17 @@ export default {
     return {}
   },
   watch: {
-    elements (value) {
+    graph (graph) {
       if (this.$_cy === null) {
         return
       }
+      if (graph === undefined) {
+        this.$_cy.remove('*')
+        return
+      }
+
       this.$_cy.remove('*')
-      this.$_cy.add(value)
+      this.$_cy.add(graph.elements)
       this.$_cy.layout(this.layout).run()
     },
     layout (value) {
@@ -52,7 +60,7 @@ export default {
   mounted () {
     const cy = cytoscape({
       container: this.$refs.container,
-      elements: this.elements,
+      elements: this.graph.elements,
       layout: this.layout,
       style
     })
@@ -69,7 +77,7 @@ export default {
     max-height: 90vh;
   }
   .card > .cytoscape-display {
-    height: 90vh;
+    height: 80vh;
     width: calc(100vw - 34rem);
   }
 </style>

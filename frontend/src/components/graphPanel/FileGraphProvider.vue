@@ -7,11 +7,15 @@ import elements from '../../assets/elements.json'
 
 export default {
   name: 'FileGraphProvider',
-  created () {
-    this.$emit('input', {
-      elements,
-      displayName: 'Dummy graph'
-    })
+  mounted () {
+    const graph = {
+      elements
+    }
+    const graphInfo = {
+      graph,
+      displayName: 'Dummy'
+    }
+    this.$emit('input', graphInfo)
   }
 }
 </script>

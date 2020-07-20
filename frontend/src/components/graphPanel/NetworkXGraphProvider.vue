@@ -60,10 +60,11 @@ export default {
   },
   methods: {
     handleOperationSucceeded (graph) {
-      this.$emit('input', {
-        ...graph,
+      const graphInfo = {
+        graph,
         displayName: `${this.generator.name.toString()} from NetworkX`
-      })
+      }
+      this.$emit('input', graphInfo)
     }
   }
 }

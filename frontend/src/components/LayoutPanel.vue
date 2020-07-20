@@ -11,13 +11,14 @@
             v-model="selectedProvider"
             :native-value="provider"
             :key="key"
+            :disabled="graph === undefined"
           >
             {{ provider.name }}
           </b-radio-button>
         </b-field>
       </header>
       <component
-        :is="selectedProvider.component"
+        :is="selectedComponent"
         :graph="graph"
         @input="$emit('input', $event)"
       />
@@ -47,8 +48,21 @@ export default {
   },
   data () {
     return {
-      selectedProvider: providers.cytoscape,
+      selectedProvider: undefined,
       providers
+    }
+  },
+  computed: {
+    selectedComponent () {
+      return this.selectedProvider !== undefined ? this.selectedProvider.component : undefined
+    }
+  },
+  watch: {
+    graph (graph) {
+      if (graph === undefined) {
+        return
+      }
+      this.selectedProvider = providers.cytoscape
     }
   }
 }
