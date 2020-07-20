@@ -37,6 +37,55 @@ layouts_dict = {
     "spiral_layout": spiral_layout,
 }
 
+def cyto_to_nx(graph):
+
+    name = 'name'
+    id = 'id'
+    value = 'value'
+    source = 'source'
+    target = 'target'
+    key = 'key'
+
+    multigraph = graph.multigraph
+    directed = graph.directed
+    data = graph.data
+
+    if multigraph:
+        G = nx.MultiGraph()
+    else:
+        G = nx.Graph()
+    if directed:
+        G = G.to_directed()
+
+    if data:
+        G.graph = data
+    else:
+        G.graph = {}
+
+    for d in graph.elements.nodes:
+        node_data = dict.fromkeys([name, id, value])
+        node = d.data.value
+        if d.data.name:
+            node_data[name] = d.data.name
+        if d.data.id:
+            node_data[id] = d.data.id
+
+        G.add_node(node)
+        G.nodes[node].update(node_data)
+
+    for d in graph.elements.edges:
+        edge_data = dict.fromkeys([source, target, key])
+        sour = d.data.source
+        targ = d.data.target
+        if multigraph:
+            key = d.data.key
+            G.add_edge(sour, targ, key=key)
+            G.edges[sour, targ, key].update(edge_data)
+        else:
+            G.add_edge(sour, targ)
+            G.edges[sour, targ].update(edge_data)
+    return G
+
 def arrange(body):
     """Arrange graph
     :param body: Graph to arrange and algorithm info
@@ -46,15 +95,23 @@ def arrange(body):
     if not connexion.request.is_json:
         return 'Request has to be in JSON format'
 
-    body = ArrangmentInfo.from_dict(connexion.request.get_json())
-    if not body.layout.name in layouts_dict.keys():
+    entity = ArrangmentInfo.from_dict(connexion.request.get_json())
+    layout_name = entity.layout.name
+    graph = entity.graph
+
+    if not layout_name in layouts_dict.keys():
         return 'Invalid layout algorithm name'
-    if not body.graph:
+    if not graph:
         return 'Graph data is missing'
 
-    G = nx.readwrite.json_graph.cytoscape_graph(body.graph)
-    P = layouts_dict.get(body.layout.name)(G)
-    return P
+    G = cyto_to_nx(graph)
+    # G = nx.readwrite.json_graph.cytoscape_graph(graph.to_dict())
+    P = layouts_dict.get(layout_name)(G)
+
+    NP = []
+    for k, v in P.items():
+        NP.append({"id": str(k), "x": str(v[0]), "y": str(v[1])})
+    return NP
 
 
 def get_layouts():
