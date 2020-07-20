@@ -15,17 +15,15 @@
           <p class="menu-label">
             Graph - from NetworkX
           </p>
-          <ul class="menu-list">
-            <li><a>TODO</a></li>
-            <li><a>TODO</a></li>
-            <li><a>TODO</a></li>
-          </ul>
+          <generators-list/>
+
           <p class="menu-label">
             Graph - from file
           </p>
           <ul class="menu-list">
             <li>TODO</li>
           </ul>
+
           <p class="menu-label">
             Layout - from NetworkX
           </p>
@@ -34,6 +32,7 @@
             <li><a>TODO</a></li>
             <li><a>TODO</a></li>
           </ul>
+
           <p class="menu-label">
             Layout - from Cytoscape
           </p>
@@ -64,10 +63,12 @@
 <script>
 
 import Example from './components/Example'
+import GeneratorsList from './components/GeneratorsList'
 
 export default {
   name: 'App',
   components: {
+    GeneratorsList,
     Example
   },
   data () {
