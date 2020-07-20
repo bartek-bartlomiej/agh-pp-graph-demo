@@ -18,6 +18,7 @@
       </header>
       <component
         :is="selectedProvider.component"
+        :graph="graph"
         @input="$emit('input', $event)"
       />
     </div>
@@ -26,11 +27,12 @@
 
 <script>
 import CytoscapeLayoutProvider from './layoutPanel/CytoscapeLayoutProvider'
+import NetworkXLayoutProvider from './layoutPanel/NetworkXLayoutProvider'
 
 const providers = {
   'network-x': {
     name: 'NetworkX',
-    component: undefined
+    component: NetworkXLayoutProvider
   },
   cytoscape: {
     name: 'Cytoscape.js',
@@ -40,6 +42,9 @@ const providers = {
 
 export default {
   name: 'LayoutPanel',
+  props: {
+    graph: Object
+  },
   data () {
     return {
       selectedProvider: providers.cytoscape,

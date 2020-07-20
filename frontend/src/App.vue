@@ -1,39 +1,42 @@
 <template>
   <div class="dashboard is-full-height">
-    <generator-panel
-      v-model="elements"
+    <graph-panel
+      v-model="graph"
     />
-    <layout-panel
-      v-model="layout"
-    />
-    <!-- main section -->
-    <div class="dashboard-main">
-      <section class="hero is-fullheight-with-navbar">
-        <div class="hero-body">
-          <example
-            :elements="elements"
-            :layout="layout" />
-        </div>
-      </section>
-    </div>
+    <template
+      v-if="graph !== undefined">
+      <layout-panel
+        :graph="graph"
+        v-model="layout"
+      />
+      <div class="dashboard-main">
+        <section class="hero is-fullheight-with-navbar">
+          <div class="hero-body">
+            <viewer
+              :elements="graph.elements"
+              :layout="layout" />
+          </div>
+        </section>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
-import Example from './components/GraphPanel'
-import GeneratorPanel from './components/ElementsPanel'
+import Viewer from './components/Viewer'
+import GraphPanel from './components/GraphPanel'
 import LayoutPanel from './components/LayoutPanel'
 
 export default {
   name: 'App',
   components: {
     LayoutPanel,
-    GeneratorPanel,
-    Example
+    GraphPanel,
+    Viewer
   },
   data () {
     return {
-      elements: undefined,
+      graph: undefined,
       layout: undefined
     }
   }

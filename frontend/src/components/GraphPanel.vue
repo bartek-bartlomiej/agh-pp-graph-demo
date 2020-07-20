@@ -1,75 +1,51 @@
 <template>
-  <div class="card cytoscape-container">
-    <div class="cytoscape-display" ref="container" />
+  <div class="dashboard-panel is-small has-background-grey-lighter is-scrollable">
+    <div class="dashboard-panel-content">
+      <header class="dashboard-panel-header">
+        <p class="menu-label">
+          Graph
+        </p>
+        <b-field position="is-centered">
+          <b-radio-button
+            v-for="(provider, key) in providers"
+            v-model="selectedProvider"
+            :native-value="provider"
+            :key="key"
+          >
+            {{ provider.name }}
+          </b-radio-button>
+        </b-field>
+      </header>
+      <component
+        :is="selectedProvider.component"
+        @input="$emit('input', $event)"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import cytoscape from 'cytoscape'
-import style from '../assets/style.json'
+import NetworkXGraphProvider from './graphPanel/NetworkXGraphProvider'
+import FileGraphProvider from './graphPanel/FileGraphProvider'
 
-const defaultLayout = {
-  name: 'grid'
+const providers = {
+  'network-x': {
+    name: 'NetworkX',
+    component: NetworkXGraphProvider
+  },
+  file: {
+    name: 'File',
+    component: FileGraphProvider
+  }
 }
 
 export default {
-  name: 'Example',
-  props: {
-    elements: {
-      type: Array,
-      required: true,
-      default () {
-        return []
-      }
-    },
-    layout: {
-      type: Object,
-      required: true,
-      default () {
-        return defaultLayout
-      }
-    }
-  },
+  name: 'GeneratorPanel',
   data () {
-    return {}
-  },
-  watch: {
-    elements (value) {
-      if (this.$_cy === null) {
-        return
-      }
-      this.$_cy.remove('*')
-      this.$_cy.add(value)
-      this.$_cy.layout(this.layout).run()
-    },
-    layout (value) {
-      if (this.$_cy === null) {
-        return
-      }
-      this.$_cy.layout(value).run()
+    return {
+      selectedProvider: providers.file,
+      providers
     }
-  },
-  mounted () {
-    const cy = cytoscape({
-      container: this.$refs.container,
-      elements: this.elements,
-      layout: this.layout,
-      style
-    })
-    cy.center()
-    this.$_cy = cy
   }
 }
-
 </script>
-
-<style>
-  .cytoscape-container {
-    display: flex;
-    max-height: 90vh;
-  }
-  .card > .cytoscape-display {
-    height: 90vh;
-    width: calc(100vw - 34rem);
-  }
-</style>

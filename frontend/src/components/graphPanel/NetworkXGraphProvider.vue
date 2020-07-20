@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     handleOperationSucceeded (graph) {
-      this.$emit('input', graph.elements)
+      this.$emit('input', graph)
     }
   }
 }
