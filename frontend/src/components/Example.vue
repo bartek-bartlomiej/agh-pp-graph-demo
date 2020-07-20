@@ -7,32 +7,53 @@
 <script>
 import cytoscape from 'cytoscape'
 import style from '../assets/style.json'
-import elements from '../assets/elements.json'
+
+const defaultLayout = {
+  name: 'grid'
+}
 
 export default {
   name: 'Example',
   props: {
-    layoutName: {
-      type: String,
+    elements: {
+      type: Array,
       required: true,
-      default: 'grid'
+      default () {
+        return []
+      }
+    },
+    layout: {
+      type: Object,
+      required: true,
+      default () {
+        return defaultLayout
+      }
     }
   },
   data () {
     return {}
   },
   watch: {
-    layoutName (value) {
+    elements (value) {
       if (this.$_cy === null) {
         return
       }
-      this.$_cy.layout({ name: value }).run()
+      this.$_cy.remove('*')
+      this.$_cy.add(value)
+      this.$_cy.layout(this.value).run()
+    },
+    layout (value) {
+      if (this.$_cy === null) {
+        return
+      }
+      this.$_cy.layout(value).run()
     }
   },
   mounted () {
     const cy = cytoscape({
       container: this.$refs.container,
-      elements,
+      elements: this.elements,
+      layout: this.layout,
       style
     })
     cy.center()
@@ -49,6 +70,6 @@ export default {
   }
   .card > .cytoscape-display {
     height: 90vh;
-    width: calc(100vw - 24rem);
+    width: calc(100vw - 34rem);
   }
 </style>

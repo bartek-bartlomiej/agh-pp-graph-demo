@@ -1,59 +1,18 @@
 <template>
   <div class="dashboard is-full-height">
-    <!-- left panel -->
-    <div class="dashboard-panel is-medium has-thick-padding has-background-grey-lighter is-hidden-mobile is-scrollable">
-      <header class="dashboard-panel-header">
-        <div class="has-text-centered">
-          <span class="tag is-large is-white">
-            PP Graph App
-          </span>
-        </div>
-      </header>
-
-      <div class="dashboard-panel-content">
-        <aside class="menu">
-          <p class="menu-label">
-            Graph - from NetworkX
-          </p>
-          <generators-list/>
-
-          <p class="menu-label">
-            Graph - from file
-          </p>
-          <ul class="menu-list">
-            <li>TODO</li>
-          </ul>
-
-          <p class="menu-label">
-            Layout - from NetworkX
-          </p>
-          <ul class="menu-list">
-            <li><a>TODO</a></li>
-            <li><a>TODO</a></li>
-            <li><a>TODO</a></li>
-          </ul>
-
-          <p class="menu-label">
-            Layout - from Cytoscape
-          </p>
-          <ul class="menu-list">
-            <li v-for="(layout, i) in layouts" :key="i">
-              <a
-                :class="{ 'is-active': (selected === layout) }"
-                @click="selected = layout">
-                {{ layout }}
-              </a>
-            </li>
-          </ul>
-        </aside>
-      </div>
-    </div>
-
+    <generator-panel
+      v-model="elements"
+    />
+    <layout-panel
+      v-model="layout"
+    />
     <!-- main section -->
     <div class="dashboard-main">
       <section class="hero is-fullheight-with-navbar">
         <div class="hero-body">
-          <example :layout-name="selected" />
+          <example
+            :elements="elements"
+            :layout="layout" />
         </div>
       </section>
     </div>
@@ -61,20 +20,21 @@
 </template>
 
 <script>
-
 import Example from './components/Example'
-import GeneratorsList from './components/GeneratorsList'
+import GeneratorPanel from './components/ElementsPanel'
+import LayoutPanel from './components/LayoutPanel'
 
 export default {
   name: 'App',
   components: {
-    GeneratorsList,
+    LayoutPanel,
+    GeneratorPanel,
     Example
   },
   data () {
     return {
-      layouts: ['random', 'grid', 'circle', 'concentric', 'breadthfirst', 'cose', 'dagre'],
-      selected: 'grid'
+      elements: undefined,
+      layout: undefined
     }
   }
 }
