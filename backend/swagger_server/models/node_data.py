@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.dual_type import DualType  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,20 +15,20 @@ class NodeData(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, value: object=None, name: str=None):  # noqa: E501
+    def __init__(self, id: DualType=None, value: DualType=None, name: DualType=None):  # noqa: E501
         """NodeData - a model defined in Swagger
 
         :param id: The id of this NodeData.  # noqa: E501
-        :type id: str
+        :type id: DualType
         :param value: The value of this NodeData.  # noqa: E501
-        :type value: object
+        :type value: DualType
         :param name: The name of this NodeData.  # noqa: E501
-        :type name: str
+        :type name: DualType
         """
         self.swagger_types = {
-            'id': str,
-            'value': object,
-            'name': str
+            'id': DualType,
+            'value': DualType,
+            'name': DualType
         }
 
         self.attribute_map = {
@@ -51,22 +52,22 @@ class NodeData(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id(self) -> str:
+    def id(self) -> DualType:
         """Gets the id of this NodeData.
 
 
         :return: The id of this NodeData.
-        :rtype: str
+        :rtype: DualType
         """
         return self._id
 
     @id.setter
-    def id(self, id: str):
+    def id(self, id: DualType):
         """Sets the id of this NodeData.
 
 
         :param id: The id of this NodeData.
-        :type id: str
+        :type id: DualType
         """
         if id is None:
             raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
@@ -74,43 +75,43 @@ class NodeData(Model):
         self._id = id
 
     @property
-    def value(self) -> object:
+    def value(self) -> DualType:
         """Gets the value of this NodeData.
 
 
         :return: The value of this NodeData.
-        :rtype: object
+        :rtype: DualType
         """
         return self._value
 
     @value.setter
-    def value(self, value: object):
+    def value(self, value: DualType):
         """Sets the value of this NodeData.
 
 
         :param value: The value of this NodeData.
-        :type value: object
+        :type value: DualType
         """
 
         self._value = value
 
     @property
-    def name(self) -> str:
+    def name(self) -> DualType:
         """Gets the name of this NodeData.
 
 
         :return: The name of this NodeData.
-        :rtype: str
+        :rtype: DualType
         """
         return self._name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: DualType):
         """Sets the name of this NodeData.
 
 
         :param name: The name of this NodeData.
-        :type name: str
+        :type name: DualType
         """
 
         self._name = name

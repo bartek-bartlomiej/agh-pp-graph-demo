@@ -15,7 +15,7 @@ class TestParseController(BaseTestCase):
     def test_upload_file(self):
         """Test case for upload_file
 
-        parse graph from attached files
+        Parse graph from attached files
         """
         data = dict(file='file_example',
                     additional_metadata='additional_metadata_example')

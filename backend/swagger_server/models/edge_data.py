@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.dual_type import DualType  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,20 +15,20 @@ class EdgeData(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, source: str=None, target: str=None, key: str=None):  # noqa: E501
+    def __init__(self, source: DualType=None, target: DualType=None, key: DualType=None):  # noqa: E501
         """EdgeData - a model defined in Swagger
 
         :param source: The source of this EdgeData.  # noqa: E501
-        :type source: str
+        :type source: DualType
         :param target: The target of this EdgeData.  # noqa: E501
-        :type target: str
+        :type target: DualType
         :param key: The key of this EdgeData.  # noqa: E501
-        :type key: str
+        :type key: DualType
         """
         self.swagger_types = {
-            'source': str,
-            'target': str,
-            'key': str
+            'source': DualType,
+            'target': DualType,
+            'key': DualType
         }
 
         self.attribute_map = {
@@ -51,22 +52,22 @@ class EdgeData(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def source(self) -> str:
+    def source(self) -> DualType:
         """Gets the source of this EdgeData.
 
 
         :return: The source of this EdgeData.
-        :rtype: str
+        :rtype: DualType
         """
         return self._source
 
     @source.setter
-    def source(self, source: str):
+    def source(self, source: DualType):
         """Sets the source of this EdgeData.
 
 
         :param source: The source of this EdgeData.
-        :type source: str
+        :type source: DualType
         """
         if source is None:
             raise ValueError("Invalid value for `source`, must not be `None`")  # noqa: E501
@@ -74,22 +75,22 @@ class EdgeData(Model):
         self._source = source
 
     @property
-    def target(self) -> str:
+    def target(self) -> DualType:
         """Gets the target of this EdgeData.
 
 
         :return: The target of this EdgeData.
-        :rtype: str
+        :rtype: DualType
         """
         return self._target
 
     @target.setter
-    def target(self, target: str):
+    def target(self, target: DualType):
         """Sets the target of this EdgeData.
 
 
         :param target: The target of this EdgeData.
-        :type target: str
+        :type target: DualType
         """
         if target is None:
             raise ValueError("Invalid value for `target`, must not be `None`")  # noqa: E501
@@ -97,22 +98,22 @@ class EdgeData(Model):
         self._target = target
 
     @property
-    def key(self) -> str:
+    def key(self) -> DualType:
         """Gets the key of this EdgeData.
 
 
         :return: The key of this EdgeData.
-        :rtype: str
+        :rtype: DualType
         """
         return self._key
 
     @key.setter
-    def key(self, key: str):
+    def key(self, key: DualType):
         """Sets the key of this EdgeData.
 
 
         :param key: The key of this EdgeData.
-        :type key: str
+        :type key: DualType
         """
 
         self._key = key

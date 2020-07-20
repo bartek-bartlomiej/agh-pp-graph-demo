@@ -31,7 +31,7 @@ class TestLayoutsController(BaseTestCase):
     def test_get_layouts(self):
         """Test case for get_layouts
 
-        Returns supported NetowrkX layout algorithms
+        Returns supported NetworkX layout algorithms
         """
         response = self.client.open(
             '/api/graph/layouts',

@@ -147,22 +147,12 @@ components:
         elements:
           nodes:
           - data:
-              name: name
-              id: id
-              value: {}
+              id: ""
           - data:
-              name: name
-              id: id
-              value: {}
+              id: ""
           edges:
-          - data:
-              source: source
-              key: key
-              target: target
-          - data:
-              source: source
-              key: key
-              target: target
+          - data: {}
+          - data: {}
         multigraph: true
     Node:
       required:
@@ -173,9 +163,7 @@ components:
           $ref: '#/components/schemas/Node_data'
       example:
         data:
-          name: name
-          id: id
-          value: {}
+          id: ""
     Edge:
       required:
       - data
@@ -184,10 +172,7 @@ components:
         data:
           $ref: '#/components/schemas/Edge_data'
       example:
-        data:
-          source: source
-          key: key
-          target: target
+        data: {}
     Layout:
       type: object
       properties:
@@ -206,7 +191,7 @@ components:
       type: object
       properties:
         id:
-          type: string
+          $ref: '#/components/schemas/DualType'
         x:
           type: number
         y:
@@ -214,7 +199,11 @@ components:
       example:
         x: 0.8008281904610115
         y: 6.027456183070403
-        id: id
+        id: ""
+    DualType:
+      oneOf:
+      - type: string
+      - type: number
     body:
       required:
       - file
@@ -240,39 +229,25 @@ components:
       example:
         nodes:
         - data:
-            name: name
-            id: id
-            value: {}
+            id: ""
         - data:
-            name: name
-            id: id
-            value: {}
+            id: ""
         edges:
-        - data:
-            source: source
-            key: key
-            target: target
-        - data:
-            source: source
-            key: key
-            target: target
+        - data: {}
+        - data: {}
     Node_data:
       required:
       - id
       type: object
       properties:
         id:
-          type: string
+          $ref: '#/components/schemas/DualType'
         value:
-          type: object
-          properties: {}
-          example: {}
+          $ref: '#/components/schemas/DualType'
         name:
-          type: string
+          $ref: '#/components/schemas/DualType'
       example:
-        name: name
-        id: id
-        value: {}
+        id: ""
     Edge_data:
       required:
       - source
@@ -280,12 +255,10 @@ components:
       type: object
       properties:
         source:
-          type: string
+          $ref: '#/components/schemas/DualType'
         target:
-          type: string
+          $ref: '#/components/schemas/DualType'
         key:
-          type: string
-      example:
-        source: source
-        key: key
-        target: target
+          $ref: '#/components/schemas/DualType'
+      example: {}
+

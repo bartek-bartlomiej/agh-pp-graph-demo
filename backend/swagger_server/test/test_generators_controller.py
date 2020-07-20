@@ -30,7 +30,7 @@ class TestGeneratorsController(BaseTestCase):
     def test_get_generators(self):
         """Test case for get_generators
 
-        Returns supported NetowrkX generators
+        Returns supported NetworkX generators
         """
         response = self.client.open(
             '/api/graph/generators',
