@@ -48,7 +48,7 @@ export default {
             this.showToast('error')
           }
           if (this.shouldRetry) {
-            setTimeout(() => this.performOperation(), this.retryTime)
+            this.$_timeout = setTimeout(() => this.performOperation(), this.retryTime)
             return
           }
           this.pending = false
@@ -77,5 +77,10 @@ export default {
       })
     },
     handleOperationSucceeded (data) {}
+  },
+  beforeDestroy () {
+    if (this.$_timeout) {
+      clearTimeout(this.$_timeout)
+    }
   }
 }
