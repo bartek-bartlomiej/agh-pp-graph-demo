@@ -47,7 +47,7 @@ def arrange(body):
         return 'Request has to be in JSON format'
 
     body = ArrangmentInfo.from_dict(connexion.request.get_json())
-    if not body.layout in layouts_dict.keys():
+    if not body.layout.name in layouts_dict.keys():
         return 'Invalid layout algorithm name'
     if not body.graph:
         return 'Graph data is missing'
