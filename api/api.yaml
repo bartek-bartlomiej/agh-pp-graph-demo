@@ -97,33 +97,25 @@ paths:
 
 
   /graph/parse:
-    post:
-      tags:
-      - parse
-      summary: Parse graph from attached files
-      operationId: uploadFile
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              required:
-              - file
-              properties:
-                file:
-                  type: string
-                  description: File with edges to upload
-                  format: binary
-                additionalMetadata:
-                  type: string
-                  description: Additional data to pass to server
-        required: true
-      responses:
-        200:
-          description: Successful operation
+      post:
+        tags:
+        - parse
+        summary: Parse graph from attached files
+        operationId: uploadFile
+        requestBody:
           content:
-            application/json:
+            application/octet-stream:
               schema:
-                $ref: '#/components/schemas/Graph'
+                type: string
+                format: binary
+          required: true
+        responses:
+          200:
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Graph'
 
 components:
   schemas:
@@ -138,10 +130,6 @@ components:
       - elements
       type: object
       properties:
-        data:
-          type: array
-          items:
-            type: string
         directed:
           type: boolean
         multigraph:
@@ -169,12 +157,11 @@ components:
             - id
           properties:
             id:
-              type: string
+              $ref: '#/components/schemas/DualType'
             value:
-              type: object
-              properties: {}
+              $ref: '#/components/schemas/DualType'
             name:
-              type: string
+              $ref: '#/components/schemas/DualType'
 
     Edge:
       required:
@@ -188,11 +175,11 @@ components:
           - target
           properties:
             source:
-              type: string
+              $ref: '#/components/schemas/DualType'
             target:
-              type: string
+              $ref: '#/components/schemas/DualType'
             key:
-              type: string
+              $ref: '#/components/schemas/DualType'
 
     Layout:
       type: object
@@ -212,8 +199,13 @@ components:
       type: object
       properties:
         id:
-          type: string
+          $ref: '#/components/schemas/DualType'
         x:
           type: number
         y:
           type: number
+
+    DualType:
+      oneOf:
+        - type: string
+        - type: number

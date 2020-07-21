@@ -103,9 +103,10 @@ paths:
       operationId: upload_file
       requestBody:
         content:
-          multipart/form-data:
+          application/octet-stream:
             schema:
-              $ref: '#/components/schemas/body'
+              type: string
+              format: binary
         required: true
       responses:
         "200":
@@ -129,10 +130,6 @@ components:
       - elements
       type: object
       properties:
-        data:
-          type: array
-          items:
-            type: string
         directed:
           type: boolean
         multigraph:
@@ -141,9 +138,6 @@ components:
           $ref: '#/components/schemas/Graph_elements'
       example:
         directed: true
-        data:
-        - data
-        - data
         elements:
           nodes:
           - data:
@@ -204,17 +198,6 @@ components:
       oneOf:
       - type: string
       - type: number
-    body:
-      required:
-      - file
-      properties:
-        file:
-          type: string
-          description: File with edges to upload
-          format: binary
-        additionalMetadata:
-          type: string
-          description: Additional data to pass to server
     Graph_elements:
       type: object
       properties:
