@@ -97,33 +97,25 @@ paths:
 
 
   /graph/parse:
-    post:
-      tags:
-      - parse
-      summary: Parse graph from attached files
-      operationId: uploadFile
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              required:
-              - file
-              properties:
-                file:
-                  type: string
-                  description: File with edges to upload
-                  format: binary
-                additionalMetadata:
-                  type: string
-                  description: Additional data to pass to server
-        required: true
-      responses:
-        200:
-          description: Successful operation
+      post:
+        tags:
+        - parse
+        summary: Parse graph from attached files
+        operationId: uploadFile
+        requestBody:
           content:
-            application/json:
+            application/octet-stream:
               schema:
-                $ref: '#/components/schemas/Graph'
+                type: string
+                format: binary
+          required: true
+        responses:
+          200:
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Graph'
 
 components:
   schemas:

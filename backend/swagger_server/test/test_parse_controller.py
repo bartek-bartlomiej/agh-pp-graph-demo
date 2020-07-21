@@ -17,13 +17,12 @@ class TestParseController(BaseTestCase):
 
         Parse graph from attached files
         """
-        data = dict(file='file_example',
-                    additional_metadata='additional_metadata_example')
+        body = Object()
         response = self.client.open(
             '/api/graph/parse',
             method='POST',
-            data=data,
-            content_type='multipart/form-data')
+            data=json.dumps(body),
+            content_type='application/octet-stream')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
