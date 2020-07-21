@@ -32,6 +32,8 @@ const mixinData = {
   toastErrorMessage: 'Could not arrange graph'
 }
 
+const defaultPositionsFunc = () => ({ x: 0, y: 0 })
+
 export default {
   name: 'NetworkXLayoutProvider',
   mixins: [
@@ -46,21 +48,20 @@ export default {
   data () {
     return {
       algorithm: undefined,
+      positions: defaultPositionsFunc,
       ...mixinData
     }
   },
   computed: {
     layout () {
       return {
+        data: {
+          name: this.algorithm.name,
+          provider: 'NetworkX'
+        },
         name: 'preset',
-        positions: undefined
+        positions: this.positions
         // TODO: params
-      }
-    },
-    layoutInfo () {
-      return {
-        layout: this.layout,
-        displayName: `${this.algorithm.name.toString()} from NetworkX`
       }
     },
     operationData () {
@@ -79,9 +80,10 @@ export default {
     }
   },
   methods: {
-    handleOperationSucceeded (graph) {
-      console.log(graph)
-      // this.$emit('input', graph.elements)
+    handleOperationSucceeded (positions) {
+      const nodeMap = new Map(positions.map((pos) => [pos.id, { x: Number.parseFloat(pos.x) * 1000, y: Number.parseFloat(pos.y) * 1000 }]))
+      this.positions = (node) => nodeMap.get(node.id())
+      this.$emit('input', this.layout)
     }
   }
 }

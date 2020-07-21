@@ -9,13 +9,13 @@ export default {
   name: 'FileGraphProvider',
   mounted () {
     const graph = {
+      data: {
+        name: 'elements.json',
+        provider: 'file'
+      },
       elements
     }
-    const graphInfo = {
-      graph,
-      displayName: 'Dummy'
-    }
-    this.$emit('input', graphInfo)
+    this.$emit('input', graph)
   }
 }
 </script>

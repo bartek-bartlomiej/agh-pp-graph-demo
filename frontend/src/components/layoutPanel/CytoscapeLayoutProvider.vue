@@ -29,28 +29,24 @@ export default {
   components: { CytoscapeAlgorithmsList },
   data () {
     return {
-      algorithm: {
-        name: 'grid'
-      }
+      algorithm: undefined
     }
   },
   computed: {
     layout () {
       return {
+        data: {
+          name: this.algorithm.name,
+          provider: 'Cytoscape.js'
+        },
         name: this.algorithm.name
         // TODO: params
-      }
-    },
-    layoutInfo () {
-      return {
-        layout: this.layout,
-        displayName: `${this.algorithm.name.toString()} from Cytoscape.js`
       }
     }
   },
   watch: {
     algorithm () {
-      this.$emit('input', this.layoutInfo)
+      this.$emit('input', this.layout)
     }
   }
 }

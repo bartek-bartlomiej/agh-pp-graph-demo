@@ -6,31 +6,17 @@
 
 <script>
 import cytoscape from 'cytoscape'
+import cloneDeep from 'lodash.clonedeep'
 import style from '../assets/style.json'
-
-const defaultGraph = {
-  elements: []
-}
-const defaultLayout = {
-  name: 'grid'
-}
 
 export default {
   name: 'Example',
   props: {
     graph: {
-      type: Object,
-      required: true,
-      default () {
-        return defaultGraph
-      }
+      type: Object
     },
     layout: {
-      type: Object,
-      required: true,
-      default () {
-        return defaultLayout
-      }
+      type: Object
     }
   },
   data () {
@@ -41,31 +27,31 @@ export default {
       if (this.$_cy === null) {
         return
       }
+      this.$_cy.remove('*')
       if (graph === undefined) {
-        this.$_cy.remove('*')
         return
       }
-
-      this.$_cy.remove('*')
-      this.$_cy.add(graph.elements)
-      this.$_cy.layout(this.layout).run()
+      this.$_cy.add(cloneDeep(graph.elements))
+      this.$_cy.center()
+      this.update(this.layout)
     },
     layout (value) {
-      if (this.$_cy === null) {
+      this.update(value)
+    }
+  },
+  methods: {
+    update (layout) {
+      if (this.$_cy === null || layout === undefined) {
         return
       }
-      this.$_cy.layout(value).run()
+      this.$_cy.layout(layout).run()
     }
   },
   mounted () {
-    const cy = cytoscape({
+    this.$_cy = cytoscape({
       container: this.$refs.container,
-      elements: this.graph.elements,
-      layout: this.layout,
       style
     })
-    cy.center()
-    this.$_cy = cy
   }
 }
 
@@ -74,7 +60,7 @@ export default {
 <style>
   .cytoscape-container {
     display: flex;
-    max-height: 90vh;
+    height: 80vh;
   }
   .card > .cytoscape-display {
     height: 80vh;
