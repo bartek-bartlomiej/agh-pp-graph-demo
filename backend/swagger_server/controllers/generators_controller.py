@@ -20,8 +20,6 @@ def wheel_graph():
     return nx.wheel_graph(N)
 
 # Small
-def bull_graph():
-    return nx.bull_graph()
 def diamond_graph():
     return nx.diamond_graph()
 def frucht_graph():
@@ -48,7 +46,6 @@ generators_dict = {
     "star_graph": star_graph,
     "wheel_graph": wheel_graph,
 
-    "bull_graph": bull_graph,
     "diamond_graph": diamond_graph,
     "frucht_graph": frucht_graph,
     "icosahedral_graph": icosahedral_graph,
