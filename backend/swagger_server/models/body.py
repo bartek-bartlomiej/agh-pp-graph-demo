@@ -14,25 +14,20 @@ class Body(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, file: str=None, additional_metadata: str=None):  # noqa: E501
+    def __init__(self, file: str=None):  # noqa: E501
         """Body - a model defined in Swagger
 
         :param file: The file of this Body.  # noqa: E501
         :type file: str
-        :param additional_metadata: The additional_metadata of this Body.  # noqa: E501
-        :type additional_metadata: str
         """
         self.swagger_types = {
-            'file': str,
-            'additional_metadata': str
+            'file': str
         }
 
         self.attribute_map = {
-            'file': 'file',
-            'additional_metadata': 'additionalMetadata'
+            'file': 'file'
         }
         self._file = file
-        self._additional_metadata = additional_metadata
 
     @classmethod
     def from_dict(cls, dikt) -> 'Body':
@@ -49,7 +44,6 @@ class Body(Model):
     def file(self) -> str:
         """Gets the file of this Body.
 
-        File with edges to upload  # noqa: E501
 
         :return: The file of this Body.
         :rtype: str
@@ -60,35 +54,9 @@ class Body(Model):
     def file(self, file: str):
         """Sets the file of this Body.
 
-        File with edges to upload  # noqa: E501
 
         :param file: The file of this Body.
         :type file: str
         """
-        if file is None:
-            raise ValueError("Invalid value for `file`, must not be `None`")  # noqa: E501
 
         self._file = file
-
-    @property
-    def additional_metadata(self) -> str:
-        """Gets the additional_metadata of this Body.
-
-        Additional data to pass to server  # noqa: E501
-
-        :return: The additional_metadata of this Body.
-        :rtype: str
-        """
-        return self._additional_metadata
-
-    @additional_metadata.setter
-    def additional_metadata(self, additional_metadata: str):
-        """Sets the additional_metadata of this Body.
-
-        Additional data to pass to server  # noqa: E501
-
-        :param additional_metadata: The additional_metadata of this Body.
-        :type additional_metadata: str
-        """
-
-        self._additional_metadata = additional_metadata
