@@ -169,12 +169,11 @@ components:
             - id
           properties:
             id:
-              type: string
+              $ref: '#/components/schemas/DualType'
             value:
-              type: object
-              properties: {}
+              $ref: '#/components/schemas/DualType'
             name:
-              type: string
+              $ref: '#/components/schemas/DualType'
 
     Edge:
       required:
@@ -188,11 +187,11 @@ components:
           - target
           properties:
             source:
-              type: string
+              $ref: '#/components/schemas/DualType'
             target:
-              type: string
+              $ref: '#/components/schemas/DualType'
             key:
-              type: string
+              $ref: '#/components/schemas/DualType'
 
     Layout:
       type: object
@@ -212,8 +211,13 @@ components:
       type: object
       properties:
         id:
-          type: string
+          $ref: '#/components/schemas/DualType'
         x:
           type: number
         y:
           type: number
+
+    DualType:
+      oneOf:
+        - type: string
+        - type: number
