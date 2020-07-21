@@ -15,11 +15,9 @@ class Graph(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, data: List[str]=None, directed: bool=None, multigraph: bool=None, elements: GraphElements=None):  # noqa: E501
+    def __init__(self, directed: bool=None, multigraph: bool=None, elements: GraphElements=None):  # noqa: E501
         """Graph - a model defined in Swagger
 
-        :param data: The data of this Graph.  # noqa: E501
-        :type data: List[str]
         :param directed: The directed of this Graph.  # noqa: E501
         :type directed: bool
         :param multigraph: The multigraph of this Graph.  # noqa: E501
@@ -28,19 +26,16 @@ class Graph(Model):
         :type elements: GraphElements
         """
         self.swagger_types = {
-            'data': List[str],
             'directed': bool,
             'multigraph': bool,
             'elements': GraphElements
         }
 
         self.attribute_map = {
-            'data': 'data',
             'directed': 'directed',
             'multigraph': 'multigraph',
             'elements': 'elements'
         }
-        self._data = data
         self._directed = directed
         self._multigraph = multigraph
         self._elements = elements
@@ -55,27 +50,6 @@ class Graph(Model):
         :rtype: Graph
         """
         return util.deserialize_model(dikt, cls)
-
-    @property
-    def data(self) -> List[str]:
-        """Gets the data of this Graph.
-
-
-        :return: The data of this Graph.
-        :rtype: List[str]
-        """
-        return self._data
-
-    @data.setter
-    def data(self, data: List[str]):
-        """Sets the data of this Graph.
-
-
-        :param data: The data of this Graph.
-        :type data: List[str]
-        """
-
-        self._data = data
 
     @property
     def directed(self) -> bool:

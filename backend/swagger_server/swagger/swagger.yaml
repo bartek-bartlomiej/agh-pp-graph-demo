@@ -130,10 +130,6 @@ components:
       - elements
       type: object
       properties:
-        data:
-          type: array
-          items:
-            type: string
         directed:
           type: boolean
         multigraph:
@@ -142,9 +138,6 @@ components:
           $ref: '#/components/schemas/Graph_elements'
       example:
         directed: true
-        data:
-        - data
-        - data
         elements:
           nodes:
           - data:

@@ -130,10 +130,6 @@ components:
       - elements
       type: object
       properties:
-        data:
-          type: array
-          items:
-            type: string
         directed:
           type: boolean
         multigraph:
