@@ -48,7 +48,6 @@ def cyto_to_nx(graph):
 
     multigraph = graph.multigraph
     directed = graph.directed
-    data = graph.data
 
     if multigraph:
         G = nx.MultiGraph()
@@ -56,11 +55,7 @@ def cyto_to_nx(graph):
         G = nx.Graph()
     if directed:
         G = G.to_directed()
-
-    if data:
-        G.graph = data
-    else:
-        G.graph = {}
+    G.graph = {}
 
     for d in graph.elements.nodes:
         node_data = dict.fromkeys([name, id, value])
