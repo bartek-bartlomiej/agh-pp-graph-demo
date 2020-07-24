@@ -18,9 +18,7 @@
     </nav>
     <section class="hero is-fullheight-with-navbar">
       <div class="hero-body">
-          <viewer
-            :graph="graph"
-            :layout="layout"/>
+          <viewer />
       </div>
     </section>
   </div>
@@ -28,56 +26,36 @@
 
 <script>
 import Viewer from './Viewer'
-import cloneDeep from 'lodash.clonedeep'
+import state from '../state'
+import graphSources from '../config/graphSources'
+import layoutSources from '../config/layoutSources'
 
 export default {
-  name: 'viewer-area',
+  name: 'ViewerArea',
   components: { Viewer },
-  props: {
-    graph: Object,
-    layout: Object
-  },
-  data () {
-    return {
-      graphInfo: {},
-      layoutInfo: {}
-    }
-  },
-  watch: {
-    graph (graph) {
-      if (graph === undefined) {
-        return
-      }
-      this.graphInfo = {
-        name: cloneDeep(graph.data.name),
-        provider: cloneDeep(graph.data.provider)
-      }
-    },
-    layout (layout) {
-      if (layout === undefined) {
-        return
-      }
-      this.layoutInfo = {
-        name: cloneDeep(layout.data.name),
-        provider: cloneDeep(layout.data.provider)
-      }
-    }
-  },
   computed: {
     graphDescription () {
-      if (this.graphInfo.provider === undefined) {
+      if (state.generator === undefined) {
         return '-'
       }
-      if (this.graphInfo.provider === 'file') {
-        return `Loaded graph from ${this.graphInfo.name}`
+      const { provider, name } = state.generator // TODO use displayName
+      if (provider === undefined) {
+        return '-'
       }
-      return `${this.graphInfo.name} from ${this.graphInfo.provider}`
+      if (provider === 'file') {
+        return `Graph loaded from ${state.generator.parameters[0].value.name}`
+      }
+      return `${name} from ${graphSources[provider].displayName}`
     },
     layoutDescription () {
-      if (this.layoutInfo.provider === undefined) {
+      if (state.algorithm === undefined) {
         return '-'
       }
-      return `${this.layoutInfo.name} from ${this.layoutInfo.provider}`
+      const { provider, name } = state.algorithm // TODO use displayName
+      if (provider === undefined) {
+        return '-'
+      }
+      return `${name} from ${layoutSources[provider].displayName}`
     }
   }
 }

@@ -1,35 +1,56 @@
 <template>
   <div class="dashboard is-full-height">
-    <graph-panel
-      v-model="graph"
-    />
-    <layout-panel
-      :graph="graph"
-      v-model="layout"
-    />
-    <viewer-area
-      :graph="graph"
-      :layout="layout"
-    />
+    <generator-panel />
+    <algorithm-panel />
+    <viewer-area />
+    <component
+      :is="graphProvider"
+      ref="graphProvider" />
+    <component
+      :is="layoutProvider"
+      ref="layoutProvider" />
   </div>
 </template>
 
 <script>
-import GraphPanel from './components/GraphPanel'
-import LayoutPanel from './components/LayoutPanel'
+import GeneratorPanel from './components/GeneratorPanel'
+import AlgorithmPanel from './components/AlgorithmPanel'
 import ViewerArea from './components/ViewerArea'
+import state from './state'
+import graphSources from './config/graphSources'
+import layoutSources from './config/layoutSources'
 
 export default {
   name: 'App',
   components: {
-    GraphPanel,
-    LayoutPanel,
+    GeneratorPanel,
+    AlgorithmPanel,
     ViewerArea
   },
   data () {
     return {
-      graph: undefined,
-      layout: undefined
+      state: state
+    }
+  },
+  computed: {
+    graphProvider () {
+      const { generator } = state
+      return generator !== undefined ? graphSources[generator.provider].providerComponent : undefined
+    },
+    layoutProvider () {
+      const { algorithm } = state
+      return algorithm !== undefined ? layoutSources[algorithm.provider].providerComponent : undefined
+    }
+  },
+  watch: {
+    'state.generator' () {
+      this.$nextTick(() => this.$refs.graphProvider.provide())
+    },
+    'state.graph' () {
+      this.$nextTick(() => this.$refs.layoutProvider.provide())
+    },
+    'state.algorithm' () {
+      this.$nextTick(() => this.$refs.layoutProvider.provide())
     }
   }
 }

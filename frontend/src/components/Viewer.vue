@@ -8,22 +8,17 @@
 import cytoscape from 'cytoscape'
 import cloneDeep from 'lodash.clonedeep'
 import style from '../assets/style.json'
+import state from '../state'
 
 export default {
-  name: 'Example',
-  props: {
-    graph: {
-      type: Object
-    },
-    layout: {
-      type: Object
+  name: 'Viewer',
+  data () {
+    return {
+      state: state
     }
   },
-  data () {
-    return {}
-  },
   watch: {
-    graph (graph) {
+    'state.graph' (graph) {
       if (this.$_cy === null) {
         return
       }
@@ -33,10 +28,10 @@ export default {
       }
       this.$_cy.add(cloneDeep(graph.elements))
       this.$_cy.center()
-      this.update(this.layout)
+      this.update(state.layout)
     },
-    layout (value) {
-      this.update(value)
+    'state.layout' (layout) {
+      this.update(layout)
     }
   },
   methods: {
@@ -54,7 +49,6 @@ export default {
     })
   }
 }
-
 </script>
 
 <style>
