@@ -18,7 +18,7 @@ def kamada_kawai_layout(G, P):
 def planar_layout(G, P):
     return nx.planar_layout(G, scale=P["scale"])
 def random_layout(G, P):
-    return nx.random_layout(G, scale=P["scale"])
+    return nx.random_layout(G)
 def shell_layout(G, P):
     return nx.shell_layout(G, scale=P["scale"])
 def spring_layout(G, P):
@@ -27,7 +27,7 @@ def spring_layout(G, P):
 def spectral_layout(G, P):
     return nx.spectral_layout(G, scale=P["scale"], weight=P["weight"])
 def spiral_layout(G, P):
-    return nx.spiral_layout(G, scale=P["scale"], weight=P["weight"], \
+    return nx.spiral_layout(G, scale=P["scale"], \
         resolution=P["resolution"], equidistant=P["equidistant"])
 
 layouts_map = {
