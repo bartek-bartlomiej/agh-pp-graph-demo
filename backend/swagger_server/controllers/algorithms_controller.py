@@ -7,8 +7,8 @@ from swagger_server.models.layout import Layout
 from swagger_server.models.node_position import NodePosition
 from swagger_server import util
 
-SCALE = 1000
-WEIGHT = None
+SCALE = 100
+WEIGHT = False
 
 # Graph layouts
 def circular_layout(G, P):
@@ -43,32 +43,42 @@ layouts_map = {
 
 WEIGHT_PARAM = {
     "name": "weight",
-    "value": WEIGHT
+    "value": WEIGHT # True = 'weight', False = None
 }
 
 SCALE_PARAM = {
     "name": "scale",
-    "value": SCALE
+    "value": SCALE,
+    "min": 100,
+    "max": 1000
 }
 
 K_PARAM = {
     "name": "k",
-    "value": None # float = 1 / sqrt(n)
+    "value": 0, # float = 1 / sqrt(n), 0 = None
+    "min": 0,
+    "max": 1
 }
 
 ITER_PARAM = {
     "name": "iterations",
-    "value": 50
+    "value": 50,
+    "min": 40,
+    "max": 80
 }
 
 THRESHOLD_PARAM = {
     "name": "threshold",
-    "value": 0.0001
+    "value": 0.0001,
+    "min": 0.000001,
+    "max": 0.1
 }
 
 RESOLUTION_PARAM = {
     "name": "resolution",
-    "value": 0.35
+    "value": 0.35,
+    "min": 0,
+    "max": 1
 }
 
 EQUIDISTANT_PARAM = {
@@ -83,20 +93,37 @@ layouts_parameters = {
     "circular_layout": [SCALE_PARAM],
     "kamada_kawai_layout": [SCALE_PARAM, WEIGHT_PARAM],
     "planar_layout": [SCALE_PARAM],
-    "random_layout": [SCALE_PARAM],
+    "random_layout": [],
     "shell_layout": [SCALE_PARAM],
     "spring_layout": [SCALE_PARAM, WEIGHT_PARAM, K_PARAM, ITER_PARAM, THRESHOLD_PARAM],
     "spectral_layout": [SCALE_PARAM, WEIGHT_PARAM],
-    "spiral_layout": [SCALE_PARAM, WEIGHT_PARAM, RESOLUTION_PARAM, EQUIDISTANT_PARAM],
+    "spiral_layout": [SCALE_PARAM, RESOLUTION_PARAM, EQUIDISTANT_PARAM],
 }
 
+def parse_weight(p, PP):
+    if (p.value == False):
+        PP.update({p.name: None})
+    else:
+        PP.update({p.name: "weight"})
+
+def parse_k(p, PP):
+    if (p.value == 0):
+        PP.update({p.name: None})
+    else:
+        PP.update({p.name: p.value})
+
 def parse_parameters(params):
-    P = {}
+    PP = {}
     for d in ALL_PARAMS:
-        P.update({d["name"]: d["value"]})
+        PP.update({d["name"]: d["value"]})
     for p in params:
-        P.update({p.name: p.value})
-    return P
+        if (p.name == "weight"):
+            parse_weight(p, PP)
+        if (p.name == "k"):
+            parse_k(p, PP)
+        else:
+            PP.update({p.name: p.value})
+    return PP
 
 def cyto_to_nx(graph):
 
@@ -163,9 +190,9 @@ def arrange(body):
     if not params:
         params = []
 
-    G = cyto_to_nx(graph)
+    # G = cyto_to_nx(graph)
     P = parse_parameters(params)
-    # G = nx.readwrite.json_graph.cytoscape_graph(graph.to_dict())
+    G = nx.readwrite.json_graph.cytoscape_graph(graph.to_dict())
     POS = layouts_map.get(layout_name)(G, P)
 
     NODES = []
