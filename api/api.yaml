@@ -206,6 +206,8 @@ components:
               $ref: '#/components/schemas/DualType'
             key:
               $ref: '#/components/schemas/DualType'
+            weight:
+              type: number
 
     Layout:
       type: object

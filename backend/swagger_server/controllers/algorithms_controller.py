@@ -160,9 +160,13 @@ def cyto_to_nx(graph):
         edge_data = dict.fromkeys([source, target, key])
         sour = d.data.source
         targ = d.data.target
+        if d.data.weight:
+            weight = d.data.weight
+        else:
+            weight = 1
         if multigraph:
             key = d.data.key
-            G.add_edge(sour, targ, key=key)
+            G.add_edge(sour, targ, key=key, weight=weight)
             G.edges[sour, targ, key].update(edge_data)
         else:
             G.add_edge(sour, targ)
@@ -190,9 +194,9 @@ def arrange(body):
     if not params:
         params = []
 
-    # G = cyto_to_nx(graph)
+    G = cyto_to_nx(graph)
     P = parse_parameters(params)
-    G = nx.readwrite.json_graph.cytoscape_graph(graph.to_dict())
+    # G = nx.readwrite.json_graph.cytoscape_graph(graph.to_dict())
     POS = layouts_map.get(layout_name)(G, P)
 
     NODES = []

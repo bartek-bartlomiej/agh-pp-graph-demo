@@ -65,7 +65,7 @@ def default_n_bounded(min, max):
     PN = {"name": "n", "value": N}
     PN.update({"min": min})
     PN.update({"max": max})
-    return PN
+    return [PN]
 
 generators_parameters = {
     "binomial_tree": default_n_bounded(1, 10),

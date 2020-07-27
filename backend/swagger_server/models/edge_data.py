@@ -15,7 +15,7 @@ class EdgeData(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, source: DualType=None, target: DualType=None, key: DualType=None):  # noqa: E501
+    def __init__(self, source: DualType=None, target: DualType=None, key: DualType=None, weight: float=None):  # noqa: E501
         """EdgeData - a model defined in Swagger
 
         :param source: The source of this EdgeData.  # noqa: E501
@@ -24,21 +24,26 @@ class EdgeData(Model):
         :type target: DualType
         :param key: The key of this EdgeData.  # noqa: E501
         :type key: DualType
+        :param weight: The weight of this EdgeData.  # noqa: E501
+        :type weight: float
         """
         self.swagger_types = {
             'source': DualType,
             'target': DualType,
-            'key': DualType
+            'key': DualType,
+            'weight': float
         }
 
         self.attribute_map = {
             'source': 'source',
             'target': 'target',
-            'key': 'key'
+            'key': 'key',
+            'weight': 'weight'
         }
         self._source = source
         self._target = target
         self._key = key
+        self._weight = weight
 
     @classmethod
     def from_dict(cls, dikt) -> 'EdgeData':
@@ -117,3 +122,24 @@ class EdgeData(Model):
         """
 
         self._key = key
+
+    @property
+    def weight(self) -> float:
+        """Gets the weight of this EdgeData.
+
+
+        :return: The weight of this EdgeData.
+        :rtype: float
+        """
+        return self._weight
+
+    @weight.setter
+    def weight(self, weight: float):
+        """Sets the weight of this EdgeData.
+
+
+        :param weight: The weight of this EdgeData.
+        :type weight: float
+        """
+
+        self._weight = weight
