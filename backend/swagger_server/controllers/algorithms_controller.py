@@ -102,29 +102,28 @@ layouts_parameters = {
     "spiral_layout": [SCALE_PARAM, RESOLUTION_PARAM, EQUIDISTANT_PARAM],
 }
 
-def parse_weight(p, PP):
+def parse_weight(p):
     if (p.value == False):
-        PP.update({p.name: None})
+        return {p.name: None}
     else:
-        PP.update({p.name: "weight"})
+        return {p.name: "weight"}
 
-def parse_k(p, PP):
+def parse_k(p):
     if (p.value == 0):
-        PP.update({p.name: None})
+        return {p.name: None}
     else:
-        PP.update({p.name: p.value})
+        return {p.name: p.value}
 
 def parse_parameters(params):
     PP = {}
-    for d in ALL_PARAMS:
-        PP.update({d["name"]: d["value"]})
     for p in params:
         if (p.name == "weight"):
-            parse_weight(p, PP)
-        if (p.name == "k"):
-            parse_k(p, PP)
+            element = parse_weight(p)
+        elif (p.name == "k"):
+            element = parse_k(p)
         else:
-            PP.update({p.name: p.value})
+            element = {p.name: p.value}
+        PP.update(element)
     return PP
 
 def cyto_to_nx(graph):
@@ -171,7 +170,7 @@ def cyto_to_nx(graph):
             G.add_edge(sour, targ, key=key, weight=weight)
             G.edges[sour, targ, key].update(edge_data)
         else:
-            G.add_edge(sour, targ)
+            G.add_edge(sour, targ, weight=weight)
             G.edges[sour, targ].update(edge_data)
     return G
 
