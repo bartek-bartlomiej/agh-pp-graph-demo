@@ -17,9 +17,15 @@
     <p class="menu-label">
       Parameters
     </p>
+    <div
+      class="is-size-7 has-text-centered is-italic"
+      v-if="algorithm === undefined">
+      Algorithm's parameters<br>will be displayed here
+    </div>
     <parameters-list
-      :name="algorithm.displayName"
-      :parameters="algorithm.parameters" />
+      :name="algorithm.name"
+      :parameters="algorithm.parameters"
+      v-else />
   </div>
 </template>
 
@@ -31,9 +37,6 @@ import ParametersList from '../ParametersList'
 export default {
   name: 'CytoscapeJSPanel',
   components: { ParametersList },
-  props: {
-    value: Object
-  },
   data () {
     const { algorithm } = state
     const validAlgorithm = algorithm !== undefined && algorithm.provider === 'cytoscape-js' ? algorithm : undefined
