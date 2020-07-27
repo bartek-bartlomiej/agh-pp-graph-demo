@@ -16,3 +16,4 @@ from swagger_server.models.node import Node
 from swagger_server.models.node_data import NodeData
 from swagger_server.models.node_position import NodePosition
 from swagger_server.models.one_of_dual_type import OneOfDualType
+from swagger_server.models.parameter import Parameter

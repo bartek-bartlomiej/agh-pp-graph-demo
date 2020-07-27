@@ -1,14 +1,14 @@
 openapi: 3.0.1
 info:
   title: PP graph app
-  version: 0.1.0
+  version: 0.2.0
 servers:
 - url: http://localhost:8080/api
 tags:
 - name: generators
-  description: Endpoints for NetworkX generators
-- name: layouts
-  description: Endpoints for NetworkX layout generators
+  description: Endpoints for NetworkX graph generators
+- name: algorithms
+  description: Endpoints for NetworkX layout algorithms
 paths:
   /graph/generators:
     get:
@@ -51,12 +51,12 @@ paths:
           description: Invalid input
           content: {}
       x-openapi-router-controller: swagger_server.controllers.generators_controller
-  /graph/layouts:
+  /graph/algorithms:
     get:
       tags:
-      - layouts
+      - algorithms
       summary: Returns supported NetworkX layout algorithms
-      operationId: get_layouts
+      operationId: get_algorithms
       responses:
         "200":
           description: Successful operation
@@ -67,11 +67,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Layout'
                 x-content-type: application/json
-      x-openapi-router-controller: swagger_server.controllers.layouts_controller
+      x-openapi-router-controller: swagger_server.controllers.algorithms_controller
   /graph/arrange:
     post:
       tags:
-      - layouts
+      - algorithms
       summary: Arrange graph
       operationId: arrange
       requestBody:
@@ -94,13 +94,22 @@ paths:
         "405":
           description: Invalid input
           content: {}
-      x-openapi-router-controller: swagger_server.controllers.layouts_controller
+      x-openapi-router-controller: swagger_server.controllers.algorithms_controller
   /graph/parse:
     post:
       tags:
       - parse
-      summary: Parse graph from attached files
+      summary: Parse graph from attached file with edge list
       operationId: upload_file
+      parameters:
+      - name: weighted
+        in: query
+        description: Is graph weighted
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       requestBody:
         content:
           multipart/form-data:
@@ -122,8 +131,29 @@ components:
       properties:
         name:
           type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
       example:
         name: name
+        parameters:
+        - name: name
+          value: ""
+        - name: name
+          value: ""
+    Parameter:
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+        value: {}
+      example:
+        name: name
+        value: ""
     Graph:
       required:
       - elements
@@ -171,8 +201,17 @@ components:
       properties:
         name:
           type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
       example:
         name: name
+        parameters:
+        - name: name
+          value: ""
+        - name: name
+          value: ""
     ArrangmentInfo:
       type: object
       properties:
