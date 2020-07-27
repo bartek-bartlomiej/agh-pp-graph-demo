@@ -31,6 +31,9 @@ export default {
       this.update(state.layout)
     },
     'state.layout' (layout) {
+      if (this.$_layout !== undefined) {
+        this.$_layout.stop()
+      }
       this.update(layout)
     }
   },
@@ -39,7 +42,8 @@ export default {
       if (this.$_cy === null || layout === undefined) {
         return
       }
-      this.$_cy.layout(layout).run()
+      this.$_layout = this.$_cy.layout(layout)
+      this.$_layout.run()
     }
   },
   mounted () {
