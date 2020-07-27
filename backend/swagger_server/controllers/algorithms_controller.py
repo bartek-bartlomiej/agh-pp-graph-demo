@@ -109,7 +109,7 @@ def arrange(body):
     return NP
 
 
-def get_layouts():
+def get_algorithms():
     """Returns supported NetworkX layout algorithms
     :rtype: List[Layout]
     """

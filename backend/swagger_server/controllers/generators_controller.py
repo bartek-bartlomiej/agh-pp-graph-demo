@@ -64,7 +64,8 @@ generators_map = {
 }
 
 DEFAULT_PARAMS = [{
-    "n": N,
+    "name": "n",
+    "value": N,
     "min": MIN,
     "max": MAX
 }]
