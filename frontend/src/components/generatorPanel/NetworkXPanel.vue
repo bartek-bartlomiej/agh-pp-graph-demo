@@ -14,12 +14,26 @@
         {{ generator.name }}
       </option>
     </b-select>
+
+    <p class="menu-label">
+      Parameters
+    </p>
+    <div
+      class="is-size-7 has-text-centered is-italic"
+      v-if="generator === undefined">
+      Generator's parameters<br>will be displayed here
+    </div>
+    <parameters-list
+      :name="generator.name"
+      :parameters="generator.parameters"
+      v-else />
   </div>
 </template>
 
 <script>
 import apiOperationMixin from '../../mixins/apiOperationMixin'
 import state from '../../state'
+import ParametersList from '../ParametersList'
 
 const mixinData = {
   operationName: 'get_generators',
@@ -30,6 +44,7 @@ const mixinData = {
 
 export default {
   name: 'NetworkXPanel',
+  components: { ParametersList },
   mixins: [
     apiOperationMixin
   ],

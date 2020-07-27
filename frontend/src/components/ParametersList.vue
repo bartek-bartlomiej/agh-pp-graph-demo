@@ -1,25 +1,18 @@
 <template>
-  <div>
-    <div
-      class="is-size-7 has-text-centered is-italic"
-      v-if="parameters === undefined">
-      {{ name }}'s parameters<br>will be displayed here
-    </div>
-    <div
-      class="is-size-7 has-text-centered is-italic"
-      v-else-if="parameters.length === 0">
-        No parameters
-    </div>
-    <section
-      v-else>
-        <component
-          v-for="(parameter, index) in parameters"
-          :key="index"
-          :is="types[typeof parameter.value]"
-          v-bind.sync="parameter"
-        />
-    </section>
+  <div
+    class="is-size-7 has-text-centered is-italic"
+    v-if="parameters.length === 0">
+      No parameters
   </div>
+  <section
+    v-else>
+      <component
+        v-for="(parameter, index) in parameters"
+        :key="index"
+        :is="types[typeof parameter.value]"
+        v-bind.sync="parameter"
+      />
+  </section>
 </template>
 
 <script>
@@ -40,11 +33,6 @@ export default {
   data () {
     return {
       types
-    }
-  },
-  methods: {
-    dbg ($event) {
-      console.log('dbg', $event)
     }
   }
 }

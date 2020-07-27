@@ -43,8 +43,11 @@ export default {
     }
   },
   watch: {
-    'state.generator' () {
-      this.$nextTick(() => this.$refs.graphProvider.provide())
+    'state.generator': {
+      deep: true,
+      handler () {
+        this.$nextTick(() => this.$refs.graphProvider.provide())
+      }
     },
     'state.graph' () {
       this.$nextTick(() => this.$refs.layoutProvider.provide())

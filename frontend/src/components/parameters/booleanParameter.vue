@@ -20,6 +20,9 @@ export default {
     }
   },
   watch: {
+    value (value) {
+      this.currentValue = value
+    },
     currentValue (value) {
       this.$emit('update:value', value)
     }

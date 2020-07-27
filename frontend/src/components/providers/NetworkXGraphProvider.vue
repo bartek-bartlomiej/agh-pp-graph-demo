@@ -26,8 +26,8 @@ export default {
   computed: {
     operationData () {
       return {
-        name: state.generator.name
-        // TODO: params from NetworkX
+        name: state.generator.name,
+        parameters: state.generator.parameters.map(({ name, value }) => ({ name, value }))
       }
     }
   },
