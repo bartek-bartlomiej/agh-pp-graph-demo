@@ -9,7 +9,7 @@
       <component
         v-for="(parameter, index) in parameters"
         :key="index"
-        :is="types[typeof parameter.value]"
+        :is="getType(parameter)"
         v-bind.sync="parameter"
       />
   </section>
@@ -30,9 +30,14 @@ export default {
     name: String,
     parameters: Array
   },
-  data () {
-    return {
-      types
+  computed: {
+    types () {
+      return types
+    }
+  },
+  methods: {
+    getType (parameter) {
+      return parameter.max !== undefined ? numberParameter : booleanParameter
     }
   }
 }

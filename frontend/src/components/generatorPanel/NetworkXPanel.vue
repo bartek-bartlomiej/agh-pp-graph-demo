@@ -31,9 +31,9 @@
 </template>
 
 <script>
+import ParametersList from '../ParametersList'
 import apiOperationMixin from '../../mixins/apiOperationMixin'
 import state from '../../state'
-import ParametersList from '../ParametersList'
 
 const mixinData = {
   operationName: 'get_generators',

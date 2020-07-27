@@ -14,15 +14,29 @@
         {{ algorithm.name }}
       </option>
     </b-select>
+
+    <p class="menu-label">
+      Parameters
+    </p>
+    <div
+      class="is-size-7 has-text-centered is-italic"
+      v-if="algorithm === undefined">
+      Algorithm's parameters<br>will be displayed here
+    </div>
+    <parameters-list
+      :name="algorithm.name"
+      :parameters="algorithm.parameters"
+      v-else />
   </div>
 </template>
 
 <script>
+import ParametersList from '../ParametersList'
 import apiOperationMixin from '../../mixins/apiOperationMixin'
 import state from '../../state'
 
 const mixinData = {
-  operationName: 'get_layouts',
+  operationName: 'get_algorithms',
   shouldRetry: true,
   consoleErrorMessage: 'Could not get algorithms',
   toastErrorMessage: 'Could not display algorithms'
@@ -30,6 +44,7 @@ const mixinData = {
 
 export default {
   name: 'NetworkXPanel',
+  components: { ParametersList },
   mixins: [
     apiOperationMixin
   ],

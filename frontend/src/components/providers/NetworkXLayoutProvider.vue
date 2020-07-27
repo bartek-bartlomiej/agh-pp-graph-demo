@@ -28,8 +28,8 @@ export default {
       return {
         graph: state.graph,
         layout: {
-          name: state.algorithm.name
-          // TODO: params from NetworkX
+          name: state.algorithm.name,
+          parameters: state.algorithm.parameters.map(({ name, value }) => ({ name, value }))
         }
       }
     }
@@ -42,8 +42,8 @@ export default {
       const map = new Map(positions.map((pos) => [
         pos.id,
         {
-          x: Number.parseFloat(pos.x) * 1000,
-          y: Number.parseFloat(pos.y) * 1000
+          x: Number.parseFloat(pos.x),
+          y: Number.parseFloat(pos.y)
         }
       ]))
 
