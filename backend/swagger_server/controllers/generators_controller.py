@@ -92,7 +92,7 @@ generators_parameters = {
 def parse_parameters(params):
     P = {"n": N}
     for p in params:
-        P.update({p.get("name"): p.get("value")})
+        P.update({p.name: p.value})
     return P
 
 def generate(body):
@@ -105,7 +105,7 @@ def generate(body):
         return 'Request has to be in JSON format'
 
     body = Generator.from_dict(connexion.request.get_json())
-    if not body.name in generators_dict.keys():
+    if not body.name in generators_map.keys():
         return 'Invalid generator name'
 
     P = parse_parameters(body.parameters)
