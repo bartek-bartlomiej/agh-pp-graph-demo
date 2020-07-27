@@ -128,6 +128,8 @@ paths:
 
 components:
   schemas:
+    AnyValue: {}
+
     Generator:
       type: object
       properties:
@@ -146,7 +148,8 @@ components:
       properties:
         name:
           type: string
-        value: {}
+        value:
+          $ref: '#/components/schemas/AnyValue'
 
     Graph:
       required:

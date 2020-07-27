@@ -126,6 +126,7 @@ paths:
       x-openapi-router-controller: swagger_server.controllers.parse_controller
 components:
   schemas:
+    AnyValue: {}
     Generator:
       type: object
       properties:
@@ -150,7 +151,8 @@ components:
       properties:
         name:
           type: string
-        value: {}
+        value:
+          $ref: '#/components/schemas/AnyValue'
       example:
         name: name
         value: ""

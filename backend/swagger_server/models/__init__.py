@@ -3,6 +3,7 @@
 # flake8: noqa
 from __future__ import absolute_import
 # import models into model package
+from swagger_server.models.any_value import AnyValue
 from swagger_server.models.arrangment_info import ArrangmentInfo
 from swagger_server.models.body import Body
 from swagger_server.models.dual_type import DualType

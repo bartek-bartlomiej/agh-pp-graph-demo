@@ -6,7 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
-from swagger_server.models.object import Object  # noqa: F401,E501
+from swagger_server.models.any_value import AnyValue  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -15,17 +15,17 @@ class Parameter(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, name: str=None, value: Object=None):  # noqa: E501
+    def __init__(self, name: str=None, value: AnyValue=None):  # noqa: E501
         """Parameter - a model defined in Swagger
 
         :param name: The name of this Parameter.  # noqa: E501
         :type name: str
         :param value: The value of this Parameter.  # noqa: E501
-        :type value: Object
+        :type value: AnyValue
         """
         self.swagger_types = {
             'name': str,
-            'value': Object
+            'value': AnyValue
         }
 
         self.attribute_map = {
@@ -70,22 +70,22 @@ class Parameter(Model):
         self._name = name
 
     @property
-    def value(self) -> Object:
+    def value(self) -> AnyValue:
         """Gets the value of this Parameter.
 
 
         :return: The value of this Parameter.
-        :rtype: Object
+        :rtype: AnyValue
         """
         return self._value
 
     @value.setter
-    def value(self, value: Object):
+    def value(self, value: AnyValue):
         """Sets the value of this Parameter.
 
 
         :param value: The value of this Parameter.
-        :type value: Object
+        :type value: AnyValue
         """
         if value is None:
             raise ValueError("Invalid value for `value`, must not be `None`")  # noqa: E501
