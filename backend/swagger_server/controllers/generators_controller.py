@@ -7,8 +7,6 @@ from swagger_server.models.graph import Graph
 from swagger_server import util
 
 N = 5
-MIN = 0
-MAX = 200
 
 # Classic
 def binomial_tree(P):
@@ -25,23 +23,23 @@ def star_graph(P):
     return nx.star_graph(P["n"])
 
 # Small
-def diamond_graph():
+def diamond_graph(P):
     return nx.diamond_graph()
-def frucht_graph():
+def frucht_graph(P):
     return nx.frucht_graph()
-def icosahedral_graph():
+def icosahedral_graph(P):
     return nx.icosahedral_graph()
-def krackhardt_kite_graph():
+def krackhardt_kite_graph(P):
     return nx.krackhardt_kite_graph()
 
 # Social networks
-def karate_club_graph():
+def karate_club_graph(P):
     return nx.karate_club_graph()
-def davis_southern_women_graph():
+def davis_southern_women_graph(P):
     return nx.davis_southern_women_graph()
-def florentine_families_graph():
+def florentine_families_graph(P):
     return nx.florentine_families_graph()
-def les_miserables_graph():
+def les_miserables_graph(P):
     return nx.les_miserables_graph()
 
 generators_map = {
@@ -63,20 +61,19 @@ generators_map = {
     "les_miserables_graph": les_miserables_graph,
 }
 
-DEFAULT_PARAMS = [{
-    "name": "n",
-    "value": N,
-    "min": MIN,
-    "max": MAX
-}]
+def default_n_bounded(min, max):
+    PN = {"name": "n", "value": N}
+    P.update({"min": min})
+    P.update({"max": max})
+    return PN
 
 generators_parameters = {
-    "binomial_tree": DEFAULT_PARAMS,
-    "complete_graph": DEFAULT_PARAMS,
-    "circular_ladder_graph": DEFAULT_PARAMS,
-    "ladder_graph": DEFAULT_PARAMS,
-    "dorogovtsev_goltsev_mendes_graph": DEFAULT_PARAMS,
-    "star_graph": DEFAULT_PARAMS,
+    "binomial_tree": default_n_bounded(0, 100),
+    "complete_graph": default_n_bounded(0, 100),
+    "circular_ladder_graph": default_n_bounded(0, 100),
+    "ladder_graph": default_n_bounded(0, 100),
+    "dorogovtsev_goltsev_mendes_graph": default_n_bounded(0, 100),
+    "star_graph": default_n_bounded(0, 100),
 
     "diamond_graph": [],
     "frucht_graph": [],
