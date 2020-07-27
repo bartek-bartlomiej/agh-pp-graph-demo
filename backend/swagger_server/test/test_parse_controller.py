@@ -15,14 +15,16 @@ class TestParseController(BaseTestCase):
     def test_upload_file(self):
         """Test case for upload_file
 
-        Parse graph from attached files
+        Parse graph from attached file with edge list
         """
+        query_string = [('weighted', true)]
         data = dict(file='file_example')
         response = self.client.open(
             '/api/graph/parse',
             method='POST',
             data=data,
-            content_type='multipart/form-data')
+            content_type='multipart/form-data',
+            query_string=query_string)
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

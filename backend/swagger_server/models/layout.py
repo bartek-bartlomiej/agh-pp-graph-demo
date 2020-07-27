@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.parameter import Parameter  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,20 +15,25 @@ class Layout(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, name: str=None):  # noqa: E501
+    def __init__(self, name: str=None, parameters: List[Parameter]=None):  # noqa: E501
         """Layout - a model defined in Swagger
 
         :param name: The name of this Layout.  # noqa: E501
         :type name: str
+        :param parameters: The parameters of this Layout.  # noqa: E501
+        :type parameters: List[Parameter]
         """
         self.swagger_types = {
-            'name': str
+            'name': str,
+            'parameters': List[Parameter]
         }
 
         self.attribute_map = {
-            'name': 'name'
+            'name': 'name',
+            'parameters': 'parameters'
         }
         self._name = name
+        self._parameters = parameters
 
     @classmethod
     def from_dict(cls, dikt) -> 'Layout':
@@ -60,3 +66,24 @@ class Layout(Model):
         """
 
         self._name = name
+
+    @property
+    def parameters(self) -> List[Parameter]:
+        """Gets the parameters of this Layout.
+
+
+        :return: The parameters of this Layout.
+        :rtype: List[Parameter]
+        """
+        return self._parameters
+
+    @parameters.setter
+    def parameters(self, parameters: List[Parameter]):
+        """Sets the parameters of this Layout.
+
+
+        :param parameters: The parameters of this Layout.
+        :type parameters: List[Parameter]
+        """
+
+        self._parameters = parameters
