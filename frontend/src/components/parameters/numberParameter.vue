@@ -3,6 +3,7 @@
     <b-slider
       :min="min"
       :max="max"
+      :step="stepValue"
       v-model="currentValue"
       lazy />
   </b-field>
@@ -15,7 +16,8 @@ export default {
     name: String,
     value: Number,
     min: Number,
-    max: Number
+    max: Number,
+    step: Number
   },
   data () {
     return {
@@ -28,6 +30,11 @@ export default {
     },
     currentValue (value) {
       this.$emit('update:value', value)
+    }
+  },
+  computed: {
+    stepValue () {
+      return this.step !== undefined ? this.step : (this.max - this.min) / 100
     }
   }
 }

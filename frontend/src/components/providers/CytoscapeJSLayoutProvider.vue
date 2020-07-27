@@ -11,8 +11,8 @@ export default {
     provide () {
       state.layout = {
         name: state.algorithm.name,
-        ...state.algorithm.parameters.reduce((acc, item, _) => {
-          acc[item.name] = item.value
+        ...state.algorithm.parameters.reduce((acc, parameter, _) => {
+          acc[parameter.name] = parameter.map !== undefined ? parameter.map(parameter.value) : parameter.value
           return acc
         }, {})
         // TODO: default params from cytoscape
