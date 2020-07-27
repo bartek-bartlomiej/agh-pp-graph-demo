@@ -11,18 +11,18 @@ MIN = 0
 MAX = 200
 
 # Classic
-def binomial_tree(p):
-    return nx.binomial_tree(p["n"])
-def complete_graph(p):
-    return nx.complete_graph(p["n"])
-def circular_ladder_graph(p):
-    return nx.circular_ladder_graph(p["n"])
-def ladder_graph(p):
-    return nx.ladder_graph(p["n"])
-def dorogovtsev_goltsev_mendes_graph(p):
-    return nx.dorogovtsev_goltsev_mendes_graph(p["n"])
-def star_graph(p):
-    return nx.star_graph(p["n"])
+def binomial_tree(P):
+    return nx.binomial_tree(P["n"])
+def complete_graph(P):
+    return nx.complete_graph(P["n"])
+def circular_ladder_graph(P):
+    return nx.circular_ladder_graph(P["n"])
+def ladder_graph(P):
+    return nx.ladder_graph(P["n"])
+def dorogovtsev_goltsev_mendes_graph(P):
+    return nx.dorogovtsev_goltsev_mendes_graph(P["n"])
+def star_graph(P):
+    return nx.star_graph(P["n"])
 
 # Small
 def diamond_graph():
