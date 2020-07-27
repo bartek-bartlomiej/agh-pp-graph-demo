@@ -7,55 +7,92 @@ from swagger_server.models.graph import Graph
 from swagger_server import util
 
 N = 5
+MIN = 1
+MAX = 200
+
 # Classic
-def binomial_tree():
-    return nx.binomial_tree(N)
-def complete_graph():
-    return nx.complete_graph(N)
-def ladder_graph():
-    return nx.ladder_graph(N)
-def star_graph():
-    return nx.star_graph(N)
-def wheel_graph():
-    return nx.wheel_graph(N)
+def binomial_tree(p):
+    return nx.binomial_tree(p["n"])
+def complete_graph(p):
+    return nx.complete_graph(p["n"])
+def circular_ladder_graph(p):
+    return nx.circular_ladder_graph(p["n"])
+def ladder_graph(p):
+    return nx.ladder_graph(p["n"])
+def dorogovtsev_goltsev_mendes_graph(p):
+    return nx.dorogovtsev_goltsev_mendes_graph(p["n"])
+def star_graph(p):
+    return nx.star_graph(p["n"])
 
-# Small
-def diamond_graph():
-    return nx.diamond_graph()
-def frucht_graph():
-    return nx.frucht_graph()
-def icosahedral_graph():
-    return nx.icosahedral_graph()
-def krackhardt_kite_graph():
-    return nx.krackhardt_kite_graph()
+# # Small
+# def diamond_graph():
+#     return nx.diamond_graph()
+# def frucht_graph():
+#     return nx.frucht_graph()
+# def icosahedral_graph():
+#     return nx.icosahedral_graph()
+# def krackhardt_kite_graph():
+#     return nx.krackhardt_kite_graph()
+#
+# # Social networks
+# def karate_club_graph():
+#     return nx.karate_club_graph()
+# def davis_southern_women_graph():
+#     return nx.davis_southern_women_graph()
+# def florentine_families_graph():
+#     return nx.florentine_families_graph()
+# def les_miserables_graph():
+#     return nx.les_miserables_graph()
 
-# Social networks
-def karate_club_graph():
-    return nx.karate_club_graph()
-def davis_southern_women_graph():
-    return nx.davis_southern_women_graph()
-def florentine_families_graph():
-    return nx.florentine_families_graph()
-def les_miserables_graph():
-    return nx.les_miserables_graph()
-
-generators_dict = {
+generators_map = {
     "binomial_tree": binomial_tree,
     "complete_graph": complete_graph,
+    "circular_ladder_graph": circular_ladder_graph,
     "ladder_graph": ladder_graph,
+    "dorogovtsev_goltsev_mendes_graph": dorogovtsev_goltsev_mendes_graph,
     "star_graph": star_graph,
-    "wheel_graph": wheel_graph,
 
-    "diamond_graph": diamond_graph,
-    "frucht_graph": frucht_graph,
-    "icosahedral_graph": icosahedral_graph,
-    "krackhardt_kite_graph": krackhardt_kite_graph,
-
-    "karate_club_graph": karate_club_graph,
-    "davis_southern_women_graph": davis_southern_women_graph,
-    "florentine_families_graph": florentine_families_graph,
-    "les_miserables_graph": les_miserables_graph,
+    # "diamond_graph": diamond_graph,
+    # "frucht_graph": frucht_graph,
+    # "icosahedral_graph": icosahedral_graph,
+    # "krackhardt_kite_graph": krackhardt_kite_graph,
+    #
+    # "karate_club_graph": karate_club_graph,
+    # "davis_southern_women_graph": davis_southern_women_graph,
+    # "florentine_families_graph": florentine_families_graph,
+    # "les_miserables_graph": les_miserables_graph,
 }
+
+DEFAULT_PARAMS = [{
+    "n": N,
+    "min": MIN,
+    "max": MAX
+}]
+
+generators_parameters = {
+    "binomial_tree": DEFAULT_PARAMS,
+    "complete_graph": DEFAULT_PARAMS,
+    "circular_ladder_graph": DEFAULT_PARAMS,
+    "ladder_graph": DEFAULT_PARAMS,
+    "dorogovtsev_goltsev_mendes_graph": DEFAULT_PARAMS,
+    "star_graph": DEFAULT_PARAMS,
+
+    # "diamond_graph": diamond_graph,
+    # "frucht_graph": frucht_graph,
+    # "icosahedral_graph": icosahedral_graph,
+    # "krackhardt_kite_graph": krackhardt_kite_graph,
+    #
+    # "karate_club_graph": karate_club_graph,
+    # "davis_southern_women_graph": davis_southern_women_graph,
+    # "florentine_families_graph": florentine_families_graph,
+    # "les_miserables_graph": les_miserables_graph,
+}
+
+def parse_parameters(params):
+    P = {"n": N}
+    for p in params:
+        P.update({p.get("name"): p.get("value")})
+    return P
 
 def generate(body):
     """Generate certain graph
@@ -70,7 +107,9 @@ def generate(body):
     if not body.name in generators_dict.keys():
         return 'Invalid generator name'
 
-    G = generators_dict.get(body.name)()
+    P = parse_parameters(body.parameters)
+
+    G = generators_map.get(body.name)(P)
     graph_data = nx.readwrite.json_graph.cytoscape_data(G)
     return graph_data
 
@@ -78,7 +117,7 @@ def get_generators():
     """Returns supported NetworkX generators
     :rtype: List[Generator]
     """
-    generators = []
-    for k, v in generators_dict.items():
-        generators.append({"name": k})
-    return generators
+    GL = []
+    for k, v in generators_parameters.items():
+        GL.append({"name": k, "parameters": v})
+    return GL
