@@ -16,7 +16,7 @@
           v-for="(parameter, index) in parameters"
           :key="index"
           :is="types[typeof parameter.value]"
-          v-bind="parameter"
+          v-bind.sync="parameter"
         />
     </section>
   </div>
@@ -40,6 +40,11 @@ export default {
   data () {
     return {
       types
+    }
+  },
+  methods: {
+    dbg ($event) {
+      console.log('dbg', $event)
     }
   }
 }

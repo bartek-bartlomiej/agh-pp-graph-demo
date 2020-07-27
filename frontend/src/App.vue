@@ -49,8 +49,11 @@ export default {
     'state.graph' () {
       this.$nextTick(() => this.$refs.layoutProvider.provide())
     },
-    'state.algorithm' () {
-      this.$nextTick(() => this.$refs.layoutProvider.provide())
+    'state.algorithm': {
+      deep: true,
+      handler () {
+        this.$nextTick(() => this.$refs.layoutProvider.provide())
+      }
     }
   }
 }

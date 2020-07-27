@@ -2,22 +2,26 @@ const algorithms = {
   grid: {
     provider: 'cytoscape-js',
     name: 'grid',
-    displayName: 'Grid'
+    displayName: 'Grid',
+    parameters: []
   },
   random: {
     provider: 'cytoscape-js',
     name: 'random',
-    displayName: 'Random'
+    displayName: 'Random',
+    parameters: []
   },
   circle: {
     provider: 'cytoscape-js',
     name: 'circle',
-    displayName: 'Circle'
+    displayName: 'Circle',
+    parameters: []
   },
   concentric: {
     provider: 'cytoscape-js',
     name: 'concentric',
-    displayName: 'Concentric'
+    displayName: 'Concentric',
+    parameters: []
   },
   breadthfirst: {
     provider: 'cytoscape-js',
@@ -62,7 +66,8 @@ const algorithms = {
   dagre: {
     provider: 'cytoscape-js',
     name: 'dagre',
-    displayName: 'Dagre'
+    displayName: 'Dagre',
+    parameters: []
   }
 }
 

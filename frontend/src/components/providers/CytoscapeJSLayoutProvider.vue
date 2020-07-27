@@ -10,8 +10,11 @@ export default {
   methods: {
     provide () {
       state.layout = {
-        name: state.algorithm.name
-        // TODO: params from algorithm
+        name: state.algorithm.name,
+        ...state.algorithm.parameters.reduce((acc, item, _) => {
+          acc[item.name] = item.value
+          return acc
+        }, {})
         // TODO: default params from cytoscape
       }
     }
