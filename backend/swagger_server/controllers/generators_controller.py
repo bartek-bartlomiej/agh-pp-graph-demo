@@ -104,13 +104,17 @@ def generate(body):
     if not connexion.request.is_json:
         return 'Request has to be in JSON format'
 
-    body = Generator.from_dict(connexion.request.get_json())
-    if not body.name in generators_map.keys():
+    entity = Generator.from_dict(connexion.request.get_json())
+    generator_name = entity.name
+    params = entity.parameters
+
+    if not generator_name in generators_map.keys():
         return 'Invalid generator name'
+    if not params:
+        params = []
 
-    P = parse_parameters(body.parameters)
-
-    G = generators_map.get(body.name)(P)
+    P = parse_parameters(params)
+    G = generators_map.get(generator_name)(P)
     graph_data = nx.readwrite.json_graph.cytoscape_data(G)
     return graph_data
 

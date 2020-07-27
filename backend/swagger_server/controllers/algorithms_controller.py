@@ -52,7 +52,7 @@ SCALE_PARAM = {
 }
 
 K_PARAM = {
-    "name": "k"
+    "name": "k",
     "value": None # float = 1 / sqrt(n)
 }
 
@@ -93,7 +93,7 @@ layouts_parameters = {
 def parse_parameters(params):
     P = {}
     for d in ALL_PARAMS:
-        P.update({d.get("name"), d.get("value")})
+        P.update({d["name"]: d["value"]})
     for p in params:
         P.update({p.name: p.value})
     return P
@@ -152,14 +152,16 @@ def arrange(body):
         return 'Request has to be in JSON format'
 
     entity = ArrangmentInfo.from_dict(connexion.request.get_json())
-    layout_name = entity.layout.name
     graph = entity.graph
-    params = entity.parameters
+    layout_name = entity.layout.name
+    params = entity.layout.parameters
 
     if not layout_name in layouts_map.keys():
         return 'Invalid layout algorithm name'
     if not graph:
         return 'Graph data is missing'
+    if not params:
+        params = []
 
     G = cyto_to_nx(graph)
     P = parse_parameters(params)
