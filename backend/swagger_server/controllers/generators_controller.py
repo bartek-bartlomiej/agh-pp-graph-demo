@@ -63,17 +63,17 @@ generators_map = {
 
 def default_n_bounded(min, max):
     PN = {"name": "n", "value": N}
-    P.update({"min": min})
-    P.update({"max": max})
+    PN.update({"min": min})
+    PN.update({"max": max})
     return PN
 
 generators_parameters = {
-    "binomial_tree": default_n_bounded(0, 100),
-    "complete_graph": default_n_bounded(0, 100),
-    "circular_ladder_graph": default_n_bounded(0, 100),
-    "ladder_graph": default_n_bounded(0, 100),
-    "dorogovtsev_goltsev_mendes_graph": default_n_bounded(0, 100),
-    "star_graph": default_n_bounded(0, 100),
+    "binomial_tree": default_n_bounded(1, 10),
+    "complete_graph": default_n_bounded(1, 100),
+    "circular_ladder_graph": default_n_bounded(5, 70),
+    "ladder_graph": default_n_bounded(2, 80),
+    "dorogovtsev_goltsev_mendes_graph": default_n_bounded(1, 6),
+    "star_graph": default_n_bounded(1, 200),
 
     "diamond_graph": [],
     "frucht_graph": [],
