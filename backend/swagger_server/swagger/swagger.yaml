@@ -1,0 +1,252 @@
+openapi: 3.0.1
+info:
+  title: PP graph app
+  version: 0.1.0
+servers:
+- url: http://localhost:8080/api
+tags:
+- name: generators
+  description: Endpoints for NetworkX generators
+- name: layouts
+  description: Endpoints for NetworkX layout generators
+paths:
+  /graph/generators:
+    get:
+      tags:
+      - generators
+      summary: Returns supported NetworkX generators
+      operationId: get_generators
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Generator'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.generators_controller
+  /graph/generate:
+    post:
+      tags:
+      - generators
+      summary: Generate certain graph
+      operationId: generate
+      requestBody:
+        description: Generator name (and its parameters)
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Generator'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Graph'
+        "405":
+          description: Invalid input
+          content: {}
+      x-openapi-router-controller: swagger_server.controllers.generators_controller
+  /graph/layouts:
+    get:
+      tags:
+      - layouts
+      summary: Returns supported NetworkX layout algorithms
+      operationId: get_layouts
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Layout'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.layouts_controller
+  /graph/arrange:
+    post:
+      tags:
+      - layouts
+      summary: Arrange graph
+      operationId: arrange
+      requestBody:
+        description: Graph to arrange and algorithm info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArrangmentInfo'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NodePosition'
+                x-content-type: application/json
+        "405":
+          description: Invalid input
+          content: {}
+      x-openapi-router-controller: swagger_server.controllers.layouts_controller
+  /graph/parse:
+    post:
+      tags:
+      - parse
+      summary: Parse graph from attached files
+      operationId: upload_file
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/body'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Graph'
+      x-openapi-router-controller: swagger_server.controllers.parse_controller
+components:
+  schemas:
+    Generator:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: name
+    Graph:
+      required:
+      - elements
+      type: object
+      properties:
+        directed:
+          type: boolean
+        multigraph:
+          type: boolean
+        elements:
+          $ref: '#/components/schemas/Graph_elements'
+      example:
+        directed: true
+        elements:
+          nodes:
+          - data:
+              id: ""
+          - data:
+              id: ""
+          edges:
+          - data: {}
+          - data: {}
+        multigraph: true
+    Node:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Node_data'
+      example:
+        data:
+          id: ""
+    Edge:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Edge_data'
+      example:
+        data: {}
+    Layout:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: name
+    ArrangmentInfo:
+      type: object
+      properties:
+        graph:
+          $ref: '#/components/schemas/Graph'
+        layout:
+          $ref: '#/components/schemas/Layout'
+    NodePosition:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/DualType'
+        x:
+          type: number
+        y:
+          type: number
+      example:
+        x: 0.8008281904610115
+        y: 6.027456183070403
+        id: ""
+    DualType:
+      oneOf:
+      - type: string
+      - type: number
+    body:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+    Graph_elements:
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'
+        edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Edge'
+      example:
+        nodes:
+        - data:
+            id: ""
+        - data:
+            id: ""
+        edges:
+        - data: {}
+        - data: {}
+    Node_data:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/DualType'
+        value:
+          $ref: '#/components/schemas/DualType'
+        name:
+          $ref: '#/components/schemas/DualType'
+      example:
+        id: ""
+    Edge_data:
+      required:
+      - source
+      - target
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/DualType'
+        target:
+          $ref: '#/components/schemas/DualType'
+        key:
+          $ref: '#/components/schemas/DualType'
+      example: {}
+

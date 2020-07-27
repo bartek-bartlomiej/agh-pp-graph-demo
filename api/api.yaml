@@ -1,0 +1,214 @@
+openapi: 3.0.1
+info:
+  title: PP graph app
+  version: 0.1.0
+servers:
+- url: http://localhost:8080/api
+
+tags:
+- name: generators
+  description: Endpoints for NetworkX generators
+- name: layouts
+  description: Endpoints for NetworkX layout generators
+
+paths:
+  /graph/generators:
+    get:
+      tags:
+      - generators
+      summary: Returns supported NetworkX generators
+      operationId: get_generators
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Generator'
+
+
+  /graph/generate:
+    post:
+      tags:
+      - generators
+      summary: Generate certain graph
+      operationId: generate
+      requestBody:
+        description: Generator name (and its parameters)
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Generator'
+        required: true
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Graph'
+        405:
+          description: Invalid input
+          content: {}
+
+  /graph/layouts:
+    get:
+      tags:
+      - layouts
+      summary: Returns supported NetworkX layout algorithms
+      operationId: get_layouts
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Layout'
+
+  /graph/arrange:
+    post:
+      tags:
+      - layouts
+      summary: Arrange graph
+      operationId: arrange
+      requestBody:
+        description: Graph to arrange and algorithm info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArrangmentInfo'
+        required: true
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NodePosition'
+        405:
+          description: Invalid input
+          content: {}
+
+
+  /graph/parse:
+      post:
+        tags:
+        - parse
+        summary: Parse graph from attached files
+        operationId: uploadFile
+        requestBody:
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  file:
+                    type: string
+                    format: binary
+          required: true
+        responses:
+          200:
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Graph'
+
+components:
+  schemas:
+    Generator:
+      type: object
+      properties:
+        name:
+          type: string
+
+    Graph:
+      required:
+      - elements
+      type: object
+      properties:
+        directed:
+          type: boolean
+        multigraph:
+          type: boolean
+        elements:
+          type: object
+          properties:
+            nodes:
+              type: array
+              items:
+                $ref: '#/components/schemas/Node'
+            edges:
+              type: array
+              items:
+                $ref: '#/components/schemas/Edge'
+
+    Node:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: '#/components/schemas/DualType'
+            value:
+              $ref: '#/components/schemas/DualType'
+            name:
+              $ref: '#/components/schemas/DualType'
+
+    Edge:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - source
+          - target
+          properties:
+            source:
+              $ref: '#/components/schemas/DualType'
+            target:
+              $ref: '#/components/schemas/DualType'
+            key:
+              $ref: '#/components/schemas/DualType'
+
+    Layout:
+      type: object
+      properties:
+        name:
+          type: string
+
+    ArrangmentInfo:
+      type: object
+      properties:
+        graph:
+          $ref: '#/components/schemas/Graph'
+        layout:
+          $ref: '#/components/schemas/Layout'
+
+    NodePosition:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/DualType'
+        x:
+          type: number
+        y:
+          type: number
+
+    DualType:
+      oneOf:
+        - type: string
+        - type: number
