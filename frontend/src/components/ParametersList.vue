@@ -18,6 +18,7 @@
 <script>
 import numberParameter from './parameters/numberParameter'
 import booleanParameter from './parameters/booleanParameter'
+import enumParameter from './parameters/enumParameter'
 
 const types = {
   boolean: booleanParameter,
@@ -37,7 +38,13 @@ export default {
   },
   methods: {
     getType (parameter) {
-      return parameter.max !== undefined ? numberParameter : booleanParameter
+      if (parameter.values !== undefined) {
+        return enumParameter
+      }
+      if (parameter.max !== undefined) {
+        return numberParameter
+      }
+      return booleanParameter
     }
   }
 }

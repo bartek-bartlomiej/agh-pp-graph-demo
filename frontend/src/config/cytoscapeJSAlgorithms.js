@@ -67,9 +67,12 @@ const algorithms = {
       {
         name: 'idealEdgeLength',
         value: 32,
-        min: 32,
-        max: 256,
-        map: value => (edge) => edge.weight !== undefined ? value / edge.weight : value
+        min: 1,
+        max: 32,
+        map: value => (edge) => {
+          const weight = edge.data('weight')
+          return weight !== undefined ? value / weight : value
+        }
       },
       {
         name: 'edgeElasticity',
@@ -136,7 +139,34 @@ const algorithms = {
     provider: 'cytoscape-js',
     name: 'dagre',
     displayName: 'Dagre',
-    parameters: []
+    parameters: [
+      {
+        name: 'rankDir',
+        value: 'TB',
+        values: ['TB', 'BT', 'LR', 'RL']
+      },
+      {
+        name: 'ranker',
+        value: 'network-simplex',
+        values: ['network-simplex', 'tight-tree', 'longest-path']
+      },
+      {
+        name: 'minLen',
+        value: 1,
+        min: 1,
+        max: 10,
+        step: 1,
+        map: value => (_) => value
+      },
+      {
+        name: 'edgeWeight',
+        value: false,
+        map: value => (edge) => {
+          const weight = edge.data('weight')
+          return weight !== undefined && value ? weight : 1
+        }
+      }
+    ]
   }
 }
 
