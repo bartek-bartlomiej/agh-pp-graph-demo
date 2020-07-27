@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: PP graph app
-  version: 0.2.0
+  version: 0.2.1
 servers:
 - url: http://localhost:8080/api
 tags:
@@ -176,8 +176,10 @@ components:
           - data:
               id: ""
           edges:
-          - data: {}
-          - data: {}
+          - data:
+              weight: 0.8008281904610115
+          - data:
+              weight: 0.8008281904610115
         multigraph: true
     Node:
       required:
@@ -197,7 +199,8 @@ components:
         data:
           $ref: '#/components/schemas/Edge_data'
       example:
-        data: {}
+        data:
+          weight: 0.8008281904610115
     Layout:
       type: object
       properties:
@@ -262,8 +265,10 @@ components:
         - data:
             id: ""
         edges:
-        - data: {}
-        - data: {}
+        - data:
+            weight: 0.8008281904610115
+        - data:
+            weight: 0.8008281904610115
     Node_data:
       required:
       - id
@@ -289,5 +294,8 @@ components:
           $ref: '#/components/schemas/DualType'
         key:
           $ref: '#/components/schemas/DualType'
-      example: {}
+        weight:
+          type: number
+      example:
+        weight: 0.8008281904610115
 

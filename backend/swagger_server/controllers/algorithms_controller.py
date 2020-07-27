@@ -7,8 +7,8 @@ from swagger_server.models.layout import Layout
 from swagger_server.models.node_position import NodePosition
 from swagger_server import util
 
-SCALE = 1000
-WEIGHT = None
+SCALE = 500
+WEIGHT = False
 
 # Graph layouts
 def circular_layout(G, P):
@@ -18,7 +18,7 @@ def kamada_kawai_layout(G, P):
 def planar_layout(G, P):
     return nx.planar_layout(G, scale=P["scale"])
 def random_layout(G, P):
-    return nx.random_layout(G, scale=P["scale"])
+    return nx.random_layout(G)
 def shell_layout(G, P):
     return nx.shell_layout(G, scale=P["scale"])
 def spring_layout(G, P):
@@ -27,7 +27,7 @@ def spring_layout(G, P):
 def spectral_layout(G, P):
     return nx.spectral_layout(G, scale=P["scale"], weight=P["weight"])
 def spiral_layout(G, P):
-    return nx.spiral_layout(G, scale=P["scale"], weight=P["weight"], \
+    return nx.spiral_layout(G, scale=P["scale"], \
         resolution=P["resolution"], equidistant=P["equidistant"])
 
 layouts_map = {
@@ -43,32 +43,42 @@ layouts_map = {
 
 WEIGHT_PARAM = {
     "name": "weight",
-    "value": WEIGHT
+    "value": WEIGHT # True = 'weight', False = None
 }
 
 SCALE_PARAM = {
     "name": "scale",
-    "value": SCALE
+    "value": SCALE,
+    "min": 100,
+    "max": 1000
 }
 
 K_PARAM = {
     "name": "k",
-    "value": None # float = 1 / sqrt(n)
+    "value": 0, # float = 1 / sqrt(n), 0 = None
+    "min": 0,
+    "max": 1
 }
 
 ITER_PARAM = {
     "name": "iterations",
-    "value": 50
+    "value": 50,
+    "min": 40,
+    "max": 80
 }
 
 THRESHOLD_PARAM = {
     "name": "threshold",
-    "value": 0.0001
+    "value": 0.0001,
+    "min": 0.000001,
+    "max": 0.1
 }
 
 RESOLUTION_PARAM = {
     "name": "resolution",
-    "value": 0.35
+    "value": 0.35,
+    "min": 0,
+    "max": 1
 }
 
 EQUIDISTANT_PARAM = {
@@ -83,20 +93,37 @@ layouts_parameters = {
     "circular_layout": [SCALE_PARAM],
     "kamada_kawai_layout": [SCALE_PARAM, WEIGHT_PARAM],
     "planar_layout": [SCALE_PARAM],
-    "random_layout": [SCALE_PARAM],
+    "random_layout": [],
     "shell_layout": [SCALE_PARAM],
     "spring_layout": [SCALE_PARAM, WEIGHT_PARAM, K_PARAM, ITER_PARAM, THRESHOLD_PARAM],
     "spectral_layout": [SCALE_PARAM, WEIGHT_PARAM],
-    "spiral_layout": [SCALE_PARAM, WEIGHT_PARAM, RESOLUTION_PARAM, EQUIDISTANT_PARAM],
+    "spiral_layout": [SCALE_PARAM, RESOLUTION_PARAM, EQUIDISTANT_PARAM],
 }
 
+def parse_weight(p, PP):
+    if (p.value == False):
+        PP.update({p.name: None})
+    else:
+        PP.update({p.name: "weight"})
+
+def parse_k(p, PP):
+    if (p.value == 0):
+        PP.update({p.name: None})
+    else:
+        PP.update({p.name: p.value})
+
 def parse_parameters(params):
-    P = {}
+    PP = {}
     for d in ALL_PARAMS:
-        P.update({d["name"]: d["value"]})
+        PP.update({d["name"]: d["value"]})
     for p in params:
-        P.update({p.name: p.value})
-    return P
+        if (p.name == "weight"):
+            parse_weight(p, PP)
+        if (p.name == "k"):
+            parse_k(p, PP)
+        else:
+            PP.update({p.name: p.value})
+    return PP
 
 def cyto_to_nx(graph):
 
@@ -133,9 +160,13 @@ def cyto_to_nx(graph):
         edge_data = dict.fromkeys([source, target, key])
         sour = d.data.source
         targ = d.data.target
+        if d.data.weight:
+            weight = d.data.weight
+        else:
+            weight = 1
         if multigraph:
             key = d.data.key
-            G.add_edge(sour, targ, key=key)
+            G.add_edge(sour, targ, key=key, weight=weight)
             G.edges[sour, targ, key].update(edge_data)
         else:
             G.add_edge(sour, targ)
