@@ -28,19 +28,34 @@ export default {
       }
       this.$_cy.add(cloneDeep(graph.elements))
       this.$_cy.center()
+      this.updateStyle(graph)
       this.update(state.layout)
     },
     'state.layout' (layout) {
-      if (this.$_layout !== undefined) {
-        this.$_layout.stop()
-      }
       this.update(layout)
     }
   },
   methods: {
+    updateStyle (graph) {
+      const maxWeight = graph !== undefined && graph.elements.edges !== undefined && graph.elements.edges[0].data.weight !== undefined
+        ? graph.elements.edges.reduce((max, { data }, _) => data.weight > max ? data.weight : max, 1)
+        : undefined
+      console.log(maxWeight)
+      const _style = this.$_cy.style(style)
+      if (maxWeight !== undefined) {
+        _style
+          .selector('edge')
+          .style('width', `mapData(weight, 1, ${maxWeight}, 1, 5)`)
+          .style('line-color', `mapData(weight, 1, ${maxWeight}, #ccc, #000)`)
+      }
+      _style.update()
+    },
     update (layout) {
       if (this.$_cy === null || layout === undefined) {
         return
+      }
+      if (this.$_layout !== undefined) {
+        this.$_layout.stop()
       }
       this.$_layout = this.$_cy.layout(layout)
       this.$_layout.run()
