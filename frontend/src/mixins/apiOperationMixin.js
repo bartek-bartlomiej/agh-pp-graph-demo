@@ -79,7 +79,7 @@ export default {
     handleOperationSucceeded (data) {}
   },
   beforeDestroy () {
-    if (this.$_timeout) {
+    if (this.$_timeout !== undefined) {
       clearTimeout(this.$_timeout)
     }
   }

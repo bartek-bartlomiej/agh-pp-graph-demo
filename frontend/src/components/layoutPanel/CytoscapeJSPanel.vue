@@ -13,15 +13,24 @@
         {{ algorithm.displayName }}
       </option>
     </b-select>
+
+    <p class="menu-label">
+      Parameters
+    </p>
+    <parameters-list
+      :name="algorithm.displayName"
+      :parameters="algorithm.parameters" />
   </div>
 </template>
 
 <script>
 import state from '../../state'
 import algorithms from '../../config/cytoscapeJSAlgorithms'
+import ParametersList from '../ParametersList'
 
 export default {
   name: 'CytoscapeJSPanel',
+  components: { ParametersList },
   props: {
     value: Object
   },
