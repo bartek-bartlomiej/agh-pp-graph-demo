@@ -4,7 +4,7 @@
       :min="min"
       :max="max"
       v-model="currentValue"
-      lazy/>
+      lazy />
   </b-field>
 </template>
 

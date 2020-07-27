@@ -6,13 +6,20 @@ const types = {
     name: 'json',
     displayName: 'JSON',
     accept: '.json,.JSON',
-    providerComponent: FileJSONGraphProvider
+    providerComponent: FileJSONGraphProvider,
+    parameters: []
   },
   edges: {
     name: 'edges',
     displayName: 'Edges List',
     accept: '.edges',
-    providerComponent: FileEdgesGraphProvider
+    providerComponent: FileEdgesGraphProvider,
+    parameters: [
+      {
+        name: 'weighted',
+        value: false
+      }
+    ]
   }
 }
 

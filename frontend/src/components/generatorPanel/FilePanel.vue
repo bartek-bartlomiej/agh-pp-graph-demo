@@ -15,6 +15,13 @@
     </b-select>
 
     <p class="menu-label">
+      Parameters
+    </p>
+    <parameters-list
+      :name="type.displayName"
+      :parameters="type.parameters" />
+
+    <p class="menu-label">
       {{ type.displayName }} File
     </p>
     <b-field class="file">
@@ -33,9 +40,11 @@
 <script>
 import state from '../../state'
 import types from '../../config/acceptedFileTypes'
+import ParametersList from '../ParametersList'
 
 export default {
   name: 'FilePanel',
+  components: { ParametersList },
   data () {
     const { generator } = state
     const validGenerator = generator !== undefined && generator.provider === 'file' ? generator : undefined
@@ -44,7 +53,8 @@ export default {
       generator: validGenerator,
       type,
       types,
-      file: undefined
+      file: undefined,
+      weighted: false
     }
   },
   watch: {
@@ -56,7 +66,8 @@ export default {
         provider: 'file',
         name: this.type.name,
         parameters: [
-          { name: 'file', value: file }
+          { name: 'file', value: file },
+          ...this.type.parameters
         ]
       }
     }
