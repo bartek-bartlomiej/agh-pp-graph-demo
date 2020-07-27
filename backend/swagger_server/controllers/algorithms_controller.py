@@ -7,7 +7,7 @@ from swagger_server.models.layout import Layout
 from swagger_server.models.node_position import NodePosition
 from swagger_server import util
 
-SCALE = 100
+SCALE = 500
 WEIGHT = False
 
 # Graph layouts
