@@ -7,6 +7,7 @@ from swagger_server.models.graph import Graph
 from swagger_server import util
 
 N = 5
+STEP = 1
 
 # Classic
 def binomial_tree(P):
@@ -65,6 +66,7 @@ def default_n_bounded(min, max):
     PN = {"name": "n", "value": N}
     PN.update({"min": min})
     PN.update({"max": max})
+    PN.update({"step": STEP})
     return [PN]
 
 generators_parameters = {

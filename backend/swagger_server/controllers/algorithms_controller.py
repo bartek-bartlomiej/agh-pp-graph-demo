@@ -50,7 +50,8 @@ SCALE_PARAM = {
     "name": "scale",
     "value": SCALE,
     "min": 100,
-    "max": 1000
+    "max": 1000,
+    "step": 1
 }
 
 K_PARAM = {
@@ -64,7 +65,8 @@ ITER_PARAM = {
     "name": "iterations",
     "value": 50,
     "min": 40,
-    "max": 80
+    "max": 80,
+    "step": 1
 }
 
 THRESHOLD_PARAM = {
