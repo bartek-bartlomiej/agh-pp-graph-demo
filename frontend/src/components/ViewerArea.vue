@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-main">
-    <nav class="navbar is-fixed-top is-light">
+    <nav class="navbar is-fixed-top has-background-grey-lighter">
       <div class="navbar-brand">
         <span class="navbar-item">
           <span class="tags has-addons">

@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-panel is-small has-background-grey-light is-scrollable">
+  <div class="dashboard-panel is-small has-background-white-bis is-scrollable">
     <div class="dashboard-panel-content">
       <header class="dashboard-panel-header">
         <p class="menu-label">
