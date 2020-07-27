@@ -7,7 +7,7 @@ from swagger_server.models.graph import Graph
 from swagger_server import util
 
 N = 5
-MIN = 1
+MIN = 0
 MAX = 200
 
 # Classic
@@ -24,25 +24,25 @@ def dorogovtsev_goltsev_mendes_graph(p):
 def star_graph(p):
     return nx.star_graph(p["n"])
 
-# # Small
-# def diamond_graph():
-#     return nx.diamond_graph()
-# def frucht_graph():
-#     return nx.frucht_graph()
-# def icosahedral_graph():
-#     return nx.icosahedral_graph()
-# def krackhardt_kite_graph():
-#     return nx.krackhardt_kite_graph()
-#
-# # Social networks
-# def karate_club_graph():
-#     return nx.karate_club_graph()
-# def davis_southern_women_graph():
-#     return nx.davis_southern_women_graph()
-# def florentine_families_graph():
-#     return nx.florentine_families_graph()
-# def les_miserables_graph():
-#     return nx.les_miserables_graph()
+# Small
+def diamond_graph():
+    return nx.diamond_graph()
+def frucht_graph():
+    return nx.frucht_graph()
+def icosahedral_graph():
+    return nx.icosahedral_graph()
+def krackhardt_kite_graph():
+    return nx.krackhardt_kite_graph()
+
+# Social networks
+def karate_club_graph():
+    return nx.karate_club_graph()
+def davis_southern_women_graph():
+    return nx.davis_southern_women_graph()
+def florentine_families_graph():
+    return nx.florentine_families_graph()
+def les_miserables_graph():
+    return nx.les_miserables_graph()
 
 generators_map = {
     "binomial_tree": binomial_tree,
@@ -52,15 +52,15 @@ generators_map = {
     "dorogovtsev_goltsev_mendes_graph": dorogovtsev_goltsev_mendes_graph,
     "star_graph": star_graph,
 
-    # "diamond_graph": diamond_graph,
-    # "frucht_graph": frucht_graph,
-    # "icosahedral_graph": icosahedral_graph,
-    # "krackhardt_kite_graph": krackhardt_kite_graph,
-    #
-    # "karate_club_graph": karate_club_graph,
-    # "davis_southern_women_graph": davis_southern_women_graph,
-    # "florentine_families_graph": florentine_families_graph,
-    # "les_miserables_graph": les_miserables_graph,
+    "diamond_graph": diamond_graph,
+    "frucht_graph": frucht_graph,
+    "icosahedral_graph": icosahedral_graph,
+    "krackhardt_kite_graph": krackhardt_kite_graph,
+
+    "karate_club_graph": karate_club_graph,
+    "davis_southern_women_graph": davis_southern_women_graph,
+    "florentine_families_graph": florentine_families_graph,
+    "les_miserables_graph": les_miserables_graph,
 }
 
 DEFAULT_PARAMS = [{
@@ -78,15 +78,15 @@ generators_parameters = {
     "dorogovtsev_goltsev_mendes_graph": DEFAULT_PARAMS,
     "star_graph": DEFAULT_PARAMS,
 
-    # "diamond_graph": diamond_graph,
-    # "frucht_graph": frucht_graph,
-    # "icosahedral_graph": icosahedral_graph,
-    # "krackhardt_kite_graph": krackhardt_kite_graph,
-    #
-    # "karate_club_graph": karate_club_graph,
-    # "davis_southern_women_graph": davis_southern_women_graph,
-    # "florentine_families_graph": florentine_families_graph,
-    # "les_miserables_graph": les_miserables_graph,
+    "diamond_graph": [],
+    "frucht_graph": [],
+    "icosahedral_graph": [],
+    "krackhardt_kite_graph": [],
+
+    "karate_club_graph": [],
+    "davis_southern_women_graph": [],
+    "florentine_families_graph": [],
+    "les_miserables_graph": [],
 }
 
 def parse_parameters(params):
