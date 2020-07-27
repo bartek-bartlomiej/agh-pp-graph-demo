@@ -20,14 +20,9 @@ function readFile (file) {
 
 export default {
   name: 'FileGraphProvider',
-  data () {
-    return {
-      generator: state.generator
-    }
-  },
   computed: {
     file () {
-      return this.generator.parameters[0].value
+      return state.generator.parameters[0].value
     }
   },
   methods: {

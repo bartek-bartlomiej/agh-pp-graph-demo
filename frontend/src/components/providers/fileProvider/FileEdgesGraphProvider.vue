@@ -20,16 +20,15 @@ export default {
   ],
   data () {
     return {
-      generator: state.generator,
       ...mixinData
     }
   },
   computed: {
     file () {
-      return this.generator.parameters[0].value
+      return state.generator.parameters[0].value
     },
     weighted () {
-      return this.generator.parameters[1].value
+      return state.generator.parameters[1].value
     },
     operationParams () {
       return {
