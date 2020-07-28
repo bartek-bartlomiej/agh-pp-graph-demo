@@ -23,6 +23,7 @@ export default {
         return
       }
       this.$_cy.remove('*')
+      this.$_cy.style().clear().update()
       if (graph === undefined) {
         return
       }
@@ -40,7 +41,6 @@ export default {
       const maxWeight = graph !== undefined && graph.elements.edges !== undefined && graph.elements.edges[0].data.weight !== undefined
         ? graph.elements.edges.reduce((max, { data }, _) => data.weight > max ? data.weight : max, 1)
         : undefined
-      console.log(maxWeight)
       const _style = this.$_cy.style(style)
       if (maxWeight !== undefined) {
         _style
@@ -48,6 +48,12 @@ export default {
           .style('width', `mapData(weight, 1, ${maxWeight}, 1, 5)`)
           .style('line-color', `mapData(weight, 1, ${maxWeight}, #ccc, #000)`)
       }
+      // else {
+      //   _style
+      //     .selector('edge')
+      //     .style('width', 1)
+      //     .style('line-color', '#ccc')
+      // }
       _style.update()
     },
     update (layout) {

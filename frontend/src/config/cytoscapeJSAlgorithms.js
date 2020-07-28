@@ -127,7 +127,7 @@ const algorithms = {
         name: 'refresh',
         value: 20,
         min: 1,
-        max: 1000
+        max: 50
       },
       {
         name: 'randomized',
