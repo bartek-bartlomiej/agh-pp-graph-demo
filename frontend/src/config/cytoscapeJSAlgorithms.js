@@ -167,6 +167,52 @@ const algorithms = {
         }
       }
     ]
+  },
+  springy: {
+    provider: 'cytoscape-js',
+    name: 'springy',
+    displayName: 'Springy',
+    parameters: [
+      {
+        name: 'fit',
+        value: 'false'
+      },
+      {
+        name: 'randomize',
+        value: false
+      },
+      {
+        name: 'infinite',
+        value: false
+      },
+      {
+        name: 'stiffness',
+        value: 400,
+        min: 0,
+        max: 1000
+      },
+      {
+        name: 'repulsion',
+        value: 400,
+        min: 0,
+        max: 1000
+      },
+      {
+        name: 'damping',
+        value: 0.5,
+        min: 0,
+        max: 1
+      },
+      {
+        name: 'edgeLength',
+        value: false,
+        map: value => (edge) => {
+          const weight = edge.data('weight')
+          return weight !== undefined && !isNaN(weight) && value ? 1 / weight : 0
+        }
+      }
+    ]
+
   }
 }
 
