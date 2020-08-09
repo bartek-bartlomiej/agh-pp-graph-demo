@@ -53,75 +53,70 @@ const algorithms = {
     parameters: [
       {
         name: 'nodeRepulsion',
-        value: 2048,
-        min: 1024,
-        max: 4096,
+        value: 400000,
+        min: 0,
+        max: 1000000,
+        step: 100000,
         map: value => (_) => value
       },
       {
         name: 'nodeOverlap',
-        value: 4,
+        value: 20,
         min: 1,
         max: 100
       },
       {
         name: 'idealEdgeLength',
-        value: 32,
-        min: 1,
-        max: 32,
+        value: 100,
+        min: 0,
+        max: 1000,
+        step: 100,
         map: value => (edge) => {
-          const weight = edge.data('weight')
-          return weight !== undefined ? value / weight : value
+          const coefficient = edge.data('coefficient')
+          return coefficient !== undefined ? value * (1 - 0.5 * coefficient) : value
         }
       },
       {
         name: 'edgeElasticity',
-        value: 32,
+        value: 100,
         min: 1,
-        max: 100,
-        map: value => (_) => value
+        max: 200
       },
       {
         name: 'nestingFactor',
-        value: 1.2,
+        value: 5,
         min: 0,
-        max: 2
+        max: 10
       },
       {
         name: 'gravity',
-        value: 1,
+        value: 80,
         min: 0,
-        max: 10
+        max: 100
       },
       {
         name: 'numIter',
         value: 1000,
         min: 500,
-        max: 2000
+        max: 10000
       },
       {
         name: 'initialTemp',
-        value: 1000,
+        value: 200,
         min: 100,
-        max: 2000
+        max: 1000
       },
       {
         name: 'coolingFactor',
-        value: 0.99,
+        value: 0.95,
         min: 0.01,
         max: 0.99
       },
       {
         name: 'minTemp',
         value: 1.0,
-        min: 1.0,
-        max: 100
-      },
-      {
-        name: 'animationThreshold',
-        value: 250,
-        min: 0,
-        max: 1000
+        min: 0.0,
+        max: 10
       },
       {
         name: 'refresh',
@@ -130,7 +125,7 @@ const algorithms = {
         max: 50
       },
       {
-        name: 'randomized',
+        name: 'randomize',
         value: false
       }
     ]
@@ -221,7 +216,7 @@ const algorithms = {
     parameters: [
       {
         name: 'fit',
-        value: 'false'
+        value: false
       },
       {
         name: 'randomize',
@@ -251,10 +246,13 @@ const algorithms = {
       },
       {
         name: 'edgeLength',
-        value: false,
+        value: 10,
+        min: 10,
+        max: 100,
+        step: 10,
         map: value => (edge) => {
-          const weight = edge.data('weight')
-          return weight !== undefined && !isNaN(weight) && value ? 1 / weight : 0
+          const coefficient = edge.data('coefficient')
+          return coefficient !== undefined ? value * (1 - 0.5 * coefficient) : value
         }
       }
     ]
