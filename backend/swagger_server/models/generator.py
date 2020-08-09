@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.parameter import Parameter  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,20 +15,25 @@ class Generator(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, name: str=None):  # noqa: E501
+    def __init__(self, name: str=None, parameters: List[Parameter]=None):  # noqa: E501
         """Generator - a model defined in Swagger
 
         :param name: The name of this Generator.  # noqa: E501
         :type name: str
+        :param parameters: The parameters of this Generator.  # noqa: E501
+        :type parameters: List[Parameter]
         """
         self.swagger_types = {
-            'name': str
+            'name': str,
+            'parameters': List[Parameter]
         }
 
         self.attribute_map = {
-            'name': 'name'
+            'name': 'name',
+            'parameters': 'parameters'
         }
         self._name = name
+        self._parameters = parameters
 
     @classmethod
     def from_dict(cls, dikt) -> 'Generator':
@@ -60,3 +66,24 @@ class Generator(Model):
         """
 
         self._name = name
+
+    @property
+    def parameters(self) -> List[Parameter]:
+        """Gets the parameters of this Generator.
+
+
+        :return: The parameters of this Generator.
+        :rtype: List[Parameter]
+        """
+        return self._parameters
+
+    @parameters.setter
+    def parameters(self, parameters: List[Parameter]):
+        """Sets the parameters of this Generator.
+
+
+        :param parameters: The parameters of this Generator.
+        :type parameters: List[Parameter]
+        """
+
+        self._parameters = parameters

@@ -1,15 +1,15 @@
 openapi: 3.0.1
 info:
   title: PP graph app
-  version: 0.1.0
+  version: 0.2.0
 servers:
 - url: http://localhost:8080/api
 
 tags:
 - name: generators
-  description: Endpoints for NetworkX generators
-- name: layouts
-  description: Endpoints for NetworkX layout generators
+  description: Endpoints for NetworkX graph generators
+- name: algorithms
+  description: Endpoints for NetworkX layout algorithms
 
 paths:
   /graph/generators:
@@ -53,12 +53,12 @@ paths:
           description: Invalid input
           content: {}
 
-  /graph/layouts:
+  /graph/algorithms:
     get:
       tags:
-      - layouts
+      - algorithms
       summary: Returns supported NetworkX layout algorithms
-      operationId: get_layouts
+      operationId: get_algorithms
       responses:
         200:
           description: Successful operation
@@ -72,7 +72,7 @@ paths:
   /graph/arrange:
     post:
       tags:
-      - layouts
+      - algorithms
       summary: Arrange graph
       operationId: arrange
       requestBody:
@@ -100,8 +100,14 @@ paths:
       post:
         tags:
         - parse
-        summary: Parse graph from attached files
-        operationId: uploadFile
+        summary: Parse graph from attached file with edge list
+        operationId: upload_file
+        parameters:
+          - in: query
+            name: weighted
+            schema:
+              type: boolean
+            description: Is graph weighted
         requestBody:
           content:
             multipart/form-data:
@@ -122,11 +128,28 @@ paths:
 
 components:
   schemas:
+    AnyValue: {}
+
     Generator:
       type: object
       properties:
         name:
           type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
+
+    Parameter:
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          $ref: '#/components/schemas/AnyValue'
 
     Graph:
       required:
@@ -183,12 +206,18 @@ components:
               $ref: '#/components/schemas/DualType'
             key:
               $ref: '#/components/schemas/DualType'
+            weight:
+              type: number
 
     Layout:
       type: object
       properties:
         name:
           type: string
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Parameter'
 
     ArrangmentInfo:
       type: object
