@@ -168,6 +168,52 @@ const algorithms = {
       }
     ]
   },
+  cola: {
+    provider: 'cytoscape-js',
+    name: 'cola',
+    displayName: 'Cola.js',
+    parameters: [
+      {
+        name: 'fit',
+        value: false
+      },
+      {
+        name: 'randomize',
+        value: true
+      },
+      {
+        name: 'nodeSpacing',
+        value: 10,
+        min: 1,
+        max: 40,
+        map: value => (_) => value
+      },
+      {
+        name: 'edgeLength',
+        value: 300,
+        min: 100,
+        max: 1000,
+        map: value => (edge) => {
+          const coefficient = edge.data('coefficient')
+          return coefficient !== undefined ? value * (1 - 0.5 * coefficient) : value
+        }
+      },
+      {
+        name: 'allConstIter',
+        value: 100,
+        min: 100,
+        max: 20000,
+        step: 100
+      },
+      {
+        name: 'maxSimulationTime',
+        value: 4000,
+        min: 1000,
+        max: 60000,
+        step: 1000
+      }
+    ]
+  },
   springy: {
     provider: 'cytoscape-js',
     name: 'springy',
@@ -212,7 +258,6 @@ const algorithms = {
         }
       }
     ]
-
   }
 }
 

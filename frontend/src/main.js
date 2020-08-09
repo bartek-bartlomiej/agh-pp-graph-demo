@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import cytoscape from 'cytoscape'
+import cola from 'cytoscape-cola'
 import dagre from 'cytoscape-dagre'
 import springy from 'cytoscape-springy'
 import Buefy from 'buefy'
@@ -8,6 +9,7 @@ import Buefy from 'buefy'
 import 'buefy/dist/buefy.min.css'
 import 'bulma-dashboard/dist/bulma-dashboard.min.css'
 
+cytoscape.use(cola)
 cytoscape.use(dagre)
 springy(cytoscape)
 

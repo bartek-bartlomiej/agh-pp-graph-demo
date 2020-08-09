@@ -27,9 +27,22 @@ export default {
       if (graph === undefined) {
         return
       }
-      this.$_cy.add(cloneDeep(graph.elements))
+
+      const elements = cloneDeep(graph.elements)
+      const maxWeight = elements.edges !== undefined && elements.edges[0].data.weight !== undefined
+        ? elements.edges.reduce((max, { data }, _) => data.weight > max ? data.weight : max, 1)
+        : undefined
+
+      if (maxWeight !== undefined) {
+        const denominate = Math.log(maxWeight)
+        elements.edges.forEach(edge => {
+          edge.data.coefficient = Math.log(edge.data.weight + 1) / denominate
+        })
+      }
+
+      this.$_cy.add(elements)
       this.$_cy.center()
-      this.updateStyle(graph)
+      this.updateStyle(graph, maxWeight)
       this.update(state.layout)
     },
     'state.layout' (layout) {
@@ -37,10 +50,7 @@ export default {
     }
   },
   methods: {
-    updateStyle (graph) {
-      const maxWeight = graph !== undefined && graph.elements.edges !== undefined && graph.elements.edges[0].data.weight !== undefined
-        ? graph.elements.edges.reduce((max, { data }, _) => data.weight > max ? data.weight : max, 1)
-        : undefined
+    updateStyle (graph, maxWeight) {
       const _style = this.$_cy.style(style)
       if (maxWeight !== undefined) {
         _style
@@ -48,12 +58,6 @@ export default {
           .style('width', `mapData(weight, 1, ${maxWeight}, 1, 5)`)
           .style('line-color', `mapData(weight, 1, ${maxWeight}, #ccc, #000)`)
       }
-      // else {
-      //   _style
-      //     .selector('edge')
-      //     .style('width', 1)
-      //     .style('line-color', '#ccc')
-      // }
       _style.update()
     },
     update (layout) {
